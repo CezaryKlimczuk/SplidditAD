@@ -33,6 +33,7 @@ def about():
     if type(any_key) == str:
         pass
 
+
 def create_new_project():
     project_name = str(input("Enter the project name: "))
     num_of_members = input("Enter the number of team members: ")
@@ -49,7 +50,8 @@ def create_new_project():
     if type(any_key) == str:
         return Project(project_name, team_members)
 
-#programme goes here
+
+# programme goes here
 
 option = ""
 projects = []
