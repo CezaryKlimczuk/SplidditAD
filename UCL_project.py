@@ -21,10 +21,10 @@ def main_menu():
           '  Show Project    (S)\n'
           '  Quit            (Q)\n')
     options = ['A', create_project, 'V', 'S', 'Q']
-    option = str(input("  Please choose an option: ")).upper()
-    while option not in options:
-        option = str(input("  Incorrect input. Please choose an option: ")).upper()
-    return option
+    selected_option = str(input("  Please choose an option: ")).upper()
+    while selected_option not in options:
+        selected_option = str(input("  Incorrect input. Please choose an option: ")).upper()
+    return selected_option
 
 
 def about():
