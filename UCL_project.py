@@ -61,8 +61,6 @@ while option != 'Q':
         about()
     elif option == create_project:
         projects.append(create_new_project())
-    else:
-        print("TODO")
 
 print(projects[0].name)
 print(projects[0].members[0].name)
