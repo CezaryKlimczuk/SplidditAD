@@ -62,5 +62,5 @@ while option != 'Q':
     elif option == create_project:
         projects.append(create_new_project())
 
-#print(projects[0].name)
-#print(projects[0].members[0].name)
+print(projects[0].name)
+print(projects[0].members[0].name)
