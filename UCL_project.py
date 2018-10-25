@@ -64,5 +64,5 @@ while option != 'Q':
     else:
         print("TODO")
 
-print(projects[0].name)
-print(projects[0].members[0].name)
+#print(projects[0].name)
+#print(projects[0].members[0].name)
