@@ -84,12 +84,12 @@ def get_new_project_member_names(num_of_members):
     :param num_of_members: (int) how many unique member names there will be in the project
     :return: a list of size num_of_members containing unique entries
     """
-    team_members = []
+    project_members = []
     for member_index in range(num_of_members):
-        member = get_project_member(member_index, team_members)
-        team_members.append(member)  # Adding Person object to the list of members
+        member = get_project_member(member_index, project_members)
+        project_members.append(member)
 
-    return team_members
+    return project_members
 
 
 def get_project_member(member_index, current_team_members):
