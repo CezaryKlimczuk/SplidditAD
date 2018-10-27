@@ -85,14 +85,28 @@ def get_new_project_member_names(num_of_members):
     :return: a list of size num_of_members containing unique entries
     """
     team_members = []
-    for i in range(num_of_members):
-        member_name = str(input("     Enter the name of team member {}: ".format(i + 1)))
-        # Checking if the same member is not entered twice
-        while member_name in [member.name for member in team_members]:
-            member_name = str(
-                input("     {} already in the team. Enter the name of team member {}: ".format(member_name, i + 1)))
-        team_members.append(Person(member_name))  # Adding Person object to the list of members
+    for member_index in range(num_of_members):
+        member = get_project_member(member_index, team_members)
+        team_members.append(member)  # Adding Person object to the list of members
+
     return team_members
+
+
+def get_project_member(member_index, current_team_members):
+    """
+    Queries the user for a member name until it is unique and returns a new Person
+
+    :param member_index: (int) a non-negative integer  indicating the position in current_team_members that the member represents
+    :param current_team_members: a list of team members entered so far
+    :return: a Person which has a unique name not currently present in current_team_members
+    """
+    member_name = str(input("     Enter the name of team member {}: ".format(member_index + 1)))
+    # Checking if the same member is not entered twice
+    while member_name in [member.name for member in current_team_members]:
+        member_name = str(
+            input(
+                "     %s already in the team. Enter the name of team member %s: " % (member_name, member_index + 1)))
+    return Person(member_name)
 
 
 def get_new_project_name():
