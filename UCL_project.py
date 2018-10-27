@@ -55,8 +55,22 @@ def valid_member_count_input(member_count_input) -> bool:
 def create_new_project():  # This function will return a project object, which will be added to projects list.
     project_name = get_new_project_name()
     num_of_members = get_new_project_member_count()
-    team_members = []
     print('\n')
+    team_members = get_new_project_member_names(num_of_members)
+    print('\n')
+    input('Press any key to return to the main menu: ')
+    return Project(project_name, team_members)
+
+
+def get_new_project_member_names(num_of_members):
+    """
+
+    Gets the names of the project members from the user and validates the inputs
+
+    :param num_of_members: (int) how many unique member names there will be in the project
+    :return: a list of size num_of_members containing unique entries
+    """
+    team_members = []
     for i in range(num_of_members):
         member_name = str(input("     Enter the name of team member {}: ".format(i + 1)))
         # Checking if the same member is not entered twice
@@ -64,10 +78,7 @@ def create_new_project():  # This function will return a project object, which w
             member_name = str(
                 input("     {} already in the team. Enter the name of team member {}: ".format(member_name, i + 1)))
         team_members.append(Person(member_name))  # Adding Person object to the list of members
-    print('\n')
-    any_key = input('Press any key to return to the main menu: ')
-    if type(any_key) == str:
-        return Project(project_name, team_members)  # Returns project object
+    return team_members
 
 
 def get_new_project_name():
