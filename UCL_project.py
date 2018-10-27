@@ -11,21 +11,28 @@ class Person:
         self.share = 0
 
 
-create_project = 'C'
+option_create_project = 'C'
+option_about = 'A'
+option_enter_votes = 'V'
+option_show_project = 'S'
+option_quit = 'Q'
+all_options = [option_about, option_create_project, option_enter_votes, option_show_project, option_quit]
 
 
-def main_menu():
+def print_main_menu():
     print('Welcome to Split-it\n\n'
           '  About           (A)\n'
           '  Create Project  (C)\n'
           '  Enter Votes     (V)\n'
           '  Show Project    (S)\n'
           '  Quit            (Q)\n')
-    options = ['A', create_project, 'V', 'S', 'Q']
-    selected_option = str(input("  Please choose an option: ")).upper()
-    while selected_option not in options:
-        selected_option = str(input("  Incorrect input. Please choose an option: ")).upper()
-    return selected_option
+
+
+def get_selected_menu_item():
+    option = str(input("  Please choose an option: ")).upper()
+    while option not in all_options:
+        option = str(input("  Incorrect input. Please choose an option: ")).upper()
+    return option
 
 
 def about():  # This function displays information about the programme.
@@ -115,15 +122,16 @@ def enter_votes():  # This function calculates the share of each member in a giv
 
 # programme goes here
 
-option = ""
+selected_option = None
 projects = []
-while option != 'Q':
-    option = main_menu()
-    if option == 'A':
+while selected_option != option_quit:
+    print_main_menu()
+    selected_option = get_selected_menu_item()
+    if selected_option == option_about:
         about()  # Displays information about the programme
-    elif option == create_project:
+    elif selected_option == option_create_project:
         projects.append(create_new_project())  # Adds a new project object to the list
-    elif option == 'V':
+    elif selected_option == option_enter_votes:
         enter_votes()
 
 print(projects[0].name)
