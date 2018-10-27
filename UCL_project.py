@@ -16,7 +16,11 @@ option_about = 'A'
 option_enter_votes = 'V'
 option_show_project = 'S'
 option_quit = 'Q'
+
 all_options = [option_about, option_create_project, option_enter_votes, option_show_project, option_quit]
+
+selected_option = None
+projects = []
 
 
 def print_main_menu():
@@ -35,20 +39,23 @@ def get_selected_menu_item():
     return option
 
 
-def about():  # This function displays information about the programme.
+def print_about():
+    """
+    Prints information about the program, and awaits user input to return to the menu
+    """
+    # TODO update program about
     print('All of the information is here!!!')
-    any_key = input('Press any key to return to the main menu: ')
-    if type(any_key) == str:
-        pass
+    input('Press any key to return to the main menu: ')
+
+
+def valid_member_count_input(member_count_input) -> bool:
+    return member_count_input.isdigit() and int(member_count_input) > 2
 
 
 def create_new_project():  # This function will return a project object, which will be added to projects list.
-    project_name = str(input("Enter the project name: "))
-    num_of_members = input("Enter the number of team members: ")
-    while not (num_of_members.isdigit() and int(num_of_members) > 2):
-        num_of_members = input("Incorrect input. Please enter the number of team members: ")
-    num_of_members = int(num_of_members)
-    team_members = []  # Creates a list of the project members
+    project_name = get_new_project_name()
+    num_of_members = get_new_project_member_count()
+    team_members = []
     print('\n')
     for i in range(num_of_members):
         member_name = str(input("     Enter the name of team member {}: ".format(i + 1)))
@@ -61,6 +68,28 @@ def create_new_project():  # This function will return a project object, which w
     any_key = input('Press any key to return to the main menu: ')
     if type(any_key) == str:
         return Project(project_name, team_members)  # Returns project object
+
+
+def get_new_project_name():
+    """
+
+    :return:
+        (str) the project name. Can be empty or the same as a previous project name
+    """
+    return str(input("Enter the project name: "))
+
+
+def get_new_project_member_count():
+    """
+
+    :return:
+        (int) the number of members the new project should have. Will be at least 3
+    """
+    num_of_members = input("Enter the number of team members: ")
+    while not valid_member_count_input(num_of_members):
+        num_of_members = input("Incorrect input. Please enter the number of team members: ")
+    num_of_members = int(num_of_members)
+    return num_of_members
 
 
 def enter_votes():  # This function calculates the share of each member in a given project
@@ -121,18 +150,13 @@ def enter_votes():  # This function calculates the share of each member in a giv
 
 
 # programme goes here
-
-selected_option = None
-projects = []
 while selected_option != option_quit:
     print_main_menu()
     selected_option = get_selected_menu_item()
+
     if selected_option == option_about:
-        about()  # Displays information about the programme
+        print_about()
     elif selected_option == option_create_project:
         projects.append(create_new_project())  # Adds a new project object to the list
     elif selected_option == option_enter_votes:
         enter_votes()
-
-print(projects[0].name)
-print(projects[0].members[0].name)
