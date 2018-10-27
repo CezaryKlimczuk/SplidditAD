@@ -52,7 +52,14 @@ def valid_member_count_input(member_count_input) -> bool:
     return member_count_input.isdigit() and int(member_count_input) > 2
 
 
-def create_new_project():  # This function will return a project object, which will be added to projects list.
+def create_new_project():
+    """
+    Queries the user to create a new project. The name might be the same as a previous project.
+    It does not add the returned Project to a repository, this is left to the caller
+
+    :return: a new Project
+    """
+    # TODO project name must be unique. Update documentation when fixed
     project_name = get_new_project_name()
     num_of_members = get_new_project_member_count()
     print('\n')
