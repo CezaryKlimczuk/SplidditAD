@@ -45,7 +45,7 @@ def print_about():
     """
     # TODO update program about
     print('All of the information is here!!!')
-    input('Press any key to return to the main menu: ')
+    await_input_for_main_menu()
 
 
 def valid_member_count_input(member_count_input) -> bool:
@@ -58,8 +58,15 @@ def create_new_project():  # This function will return a project object, which w
     print('\n')
     team_members = get_new_project_member_names(num_of_members)
     print('\n')
-    input('Press any key to return to the main menu: ')
+    await_input_for_main_menu()
     return Project(project_name, team_members)
+
+
+def await_input_for_main_menu():
+    """
+    Requests the user to input anything to return to the main menu
+    """
+    input('Press any key to return to the main menu: ')
 
 
 def get_new_project_member_names(num_of_members):
