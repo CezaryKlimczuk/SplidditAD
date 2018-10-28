@@ -14,8 +14,8 @@ class Person:
         self.share = 0
 
 
-option_create_project = 'C'
 option_about = 'A'
+option_create_project = 'C'
 option_enter_votes = 'V'
 option_show_project = 'S'
 option_quit = 'Q'
