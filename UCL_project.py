@@ -22,7 +22,6 @@ option_quit = 'Q'
 
 all_options = [option_about, option_create_project, option_enter_votes, option_show_project, option_quit]
 
-selected_option = None
 projects = []
 
 
@@ -199,14 +198,19 @@ def get_project_from_user():
     return chosen_project
 
 
-# programme goes here
-while selected_option != option_quit:
-    print_main_menu()
-    selected_option = get_selected_menu_item()
+def main():
+    selected_option = None
+    while selected_option != option_quit:
+        print_main_menu()
+        selected_option = get_selected_menu_item()
 
-    if selected_option == option_about:
-        print_about()
-    elif selected_option == option_create_project:
-        projects.append(create_new_project())  # Adds a new project object to the list
-    elif selected_option == option_enter_votes:
-        enter_votes()
+        if selected_option == option_about:
+            print_about()
+        elif selected_option == option_create_project:
+            projects.append(create_new_project())  # Adds a new project object to the list
+        elif selected_option == option_enter_votes:
+            enter_votes()
+
+
+if __name__ == '__main__':
+    main()
