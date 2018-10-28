@@ -21,7 +21,7 @@ def test_get_selected_menu_item(test_case: TestCase, mock_input_val, expected):
 
 class TestGetSelectedMenuItem(TestCase):
 
-    def test_get_selected_menu_item_returns_about_for_a(self):
+    def test_get_selected_menu_item(self):
         test_get_selected_menu_item(self, "a", option_about)
         test_get_selected_menu_item(self, "c", option_create_project)
         test_get_selected_menu_item(self, "v", option_enter_votes)
