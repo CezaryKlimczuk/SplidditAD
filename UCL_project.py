@@ -133,51 +133,73 @@ def get_new_project_member_count():
     return num_of_members
 
 
-def enter_votes():  # This function calculates the share of each member in a given project
-    project = get_project_from_user()
-    print('There are %s team members.' % project.get_member_count())
+def assign_points_from_user(project):
     # The process of assigning votes starts here
-    points_given = []  # A list of the sum of votes given by each member
+    points = []  # A list of the sum of votes given by each member
     points_assigned_correctly = False  # All values need to be equal to 100, ergo False
     while not points_assigned_correctly:
         # Iterating through all members in a project
-        for member in project.members:
-            print("\nEnter %s's votes, points must add up to 100:\n" % member.name)
-            points_left = 100  # The number of disposable votes for each member
+        for assignor in project.members:
+            print("\nEnter %s's votes, points must add up to 100:\n" % assignor.name)
+            remaining_points = 100  # The number of disposable votes for each member
             # Iterating through all partners of a member
-            how_many_partners_left = len(project.members) - 2
+            remaining_members_count = len(project.members) - 2
             # This will be used to ensure that no partner is left with zero points (check WHILE NOT below)
-            HMPL = how_many_partners_left
-            for other_member in project.members:
-                if other_member != member:
-                    points = input("Enter %s's points for %s:" % (member.name, other_member.name))
-                    # Checking if the votes are non-negative
-                    # And their sum is not greater than disposable votes
-                    while not (points.isdigit() and 0 < int(points) <= points_left - HMPL):
-                        points = input(
-                            "Incorrect input. Enter %s's points for %s:" % (member.name, other_member.name))
-                    other_member.votes.append(int(points))  # Adding votes to a member
-                    points_left -= int(points)  # Decreasing the number of disposable votes left
-                    HMPL -= 1
-            points_given.append(100 - points_left)  # Adding the number of points given by each member (should be 100)
-        points_assigned_correctly = True  # Assuming that all values in points_given are 100
+            for assignee in project.members:
+                if assignee != assignor:
+                    points_input = get_assigned_points(assignor, assignee, remaining_points, remaining_members_count)
+
+                    assignee.votes.append(points_input)  # Adding votes to a member
+                    remaining_points -= points_input  # Decreasing the number of disposable votes left
+                    remaining_members_count -= 1
+
+            points.append(100 - remaining_points)  # Adding the number of points given by each member (should be 100)
+
+        points_assigned_correctly = True  # Assuming that all values in points are 100
         # Checking if each member's votes add up to 100.
         # If they don't, any changes are cancelled. Iterate through members again (while loop)
-        for x in points_given:
+        for x in points:
             if x != 100:
                 points_assigned_correctly = False
                 print('\nPoints from every member have to add up to 100. Please try again.\n')
                 for any_member in project.members:
                     any_member.votes = []
-                points_given = []
+                points = []
                 break
-    # If all votes have been assigned correctly, calculate the share of each member.
-    # Store the share in Person object
+
+
+def get_assigned_points(assignor, assignee, points_left, remaining_members_count):
+    """
+    Queries the user for points to allocate from assignor to assignee
+
+
+    :param assignor: (Person) The project member who is giving points to the assignee
+    :param assignee: (Person) The project member who is being given points by the assignor
+    :param points_left: (int) The number of points the assignor has remaining to assign
+    :param remaining_members_count: The number of members the assignor still has to allocate points to afterwards
+    :return: (int) The number of points the assignor allocated to the assignee
+    """
+    points = input("Enter %s's points for %s:" % (assignor.name, assignee.name))
+    # Checking if the votes are non-negative
+    # And their sum is not greater than disposable votes
+    while not (points.isdigit() and 0 < int(points) <= points_left - remaining_members_count):
+        points = input("Incorrect input. Enter %s's points for %s:" % (assignor.name, assignee.name))
+
+    return int(points)
+
+
+def enter_votes():  # This function calculates the share of each member in a given project
+    project = get_project_from_user()
+    print('There are %s team members.' % project.get_member_count())
+    assign_points_from_user(project)
+
+    # Calculate and store the share for each member
     for member in project.members:
         denominator = 1
         for vote in member.votes:
             denominator += (100 - vote) / vote
         member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
+
     # Masz tutaj wyniki gdybyś chciał sprawdzić jak to wszystko działa. Enjoy ^^
     for member in project.members:
         print('%s - %s' % (member.name, member.share))
