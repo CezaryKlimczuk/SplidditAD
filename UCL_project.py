@@ -94,7 +94,6 @@ def await_input_for_main_menu():
 
 def get_new_project_member_names(num_of_members):
     """
-
     Gets the names of the project members from the user and validates the inputs
 
     :param num_of_members: (int) how many unique member names there will be in the project
@@ -127,6 +126,7 @@ def get_project_member(member_index, current_team_members):
 
 def get_new_project_name():
     """
+    Queries the user for a new project name.
 
     :return:
         (str) the project name. Can be empty or the same as a previous project name
@@ -136,6 +136,7 @@ def get_new_project_name():
 
 def get_new_project_member_count():
     """
+    Queries the user for the number of members for a new project
 
     :return:
         (int) the number of members the new project should have. Will be at least 3
@@ -148,6 +149,11 @@ def get_new_project_member_count():
 
 
 def assign_points_from_user(project):
+    """
+    Queries the user to assign votes for each member of the supplied project
+
+    :param project: The project that the user has to fill in the votes for each member
+    """
     # The process of assigning votes starts here
     points = []  # A list of the sum of votes given by each member
     points_assigned_correctly = False  # All values need to be equal to 100, ergo False
@@ -186,7 +192,6 @@ def get_assigned_points(assignor, assignee, points_left, remaining_members_count
     """
     Queries the user for points to allocate from assignor to assignee
 
-
     :param assignor: (Person) The project member who is giving points to the assignee
     :param assignee: (Person) The project member who is being given points by the assignor
     :param points_left: (int) The number of points the assignor has remaining to assign
@@ -206,7 +211,11 @@ def get_assigned_points(assignor, assignee, points_left, remaining_members_count
     return int(points)
 
 
-def enter_votes():  # This function calculates the share of each member in a given project
+def enter_votes():
+    """
+    Queries the user for a project name, finds the project, queries user for votes, and calculates finally calculated
+    the share of each member in a given project
+    """
     project = get_project_from_user()
     print('There are %s team members.' % project.get_member_count())
     assign_points_from_user(project)
@@ -225,7 +234,7 @@ def enter_votes():  # This function calculates the share of each member in a giv
 
 def get_project_from_user():
     """
-    Gets a Project for a project name supplied by the user
+    Queries the user for a project name and returns the first project that has that name.
 
     :return: a Project
     """
@@ -239,6 +248,9 @@ def get_project_from_user():
 
 
 def main():
+    """
+    Most important part of the program. Responsible for the main menu
+    """
     selected_option = None
     while selected_option != option_quit:
         print_main_menu()
@@ -253,4 +265,7 @@ def main():
 
 
 if __name__ == '__main__':
+    """
+    The main entry point to the program
+    """
     main()
