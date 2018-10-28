@@ -26,6 +26,9 @@ projects = []
 
 
 def print_main_menu():
+    """
+    Prints the main menu
+    """
     print('Welcome to Split-it\n\n'
           '  About           (A)\n'
           '  Create Project  (C)\n'
@@ -35,6 +38,11 @@ def print_main_menu():
 
 
 def get_selected_menu_item():
+    """
+    Queries the user to enter the shortcut for a menu item. users query is case insensitive and whitespace is stripped.
+
+    :return: an element of all_options
+    """
     option = str(input("  Please choose an option: ")).upper().strip()
     while option not in all_options:
         option = str(input("  Incorrect input. Please choose an option: ")).upper().strip()
