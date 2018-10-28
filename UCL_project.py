@@ -45,12 +45,26 @@ def print_about():
     """
     Prints information about the program, and awaits user input to return to the menu
     """
-    # TODO update program about
-    print('All of the information is here!!!')
+    about = "This is a Fair Grade Allocator. The purpose of the application is to help teams allocate the credit for a " \
+            "project so that all parties are satisfied with the outcome. The idea is inspired by the work of " \
+            "Ariel Procaccia, a professor, and Jonathan Goldman, a student, who were both at Carnegie Mellon " \
+            "University in the USA (Jonathan now works for Facebook). They went on to produce a web application " \
+            "called Spliddit which offers provably fair solutions for a variety of division problems including " \
+            "rent payments, restaurant bills and shared tasks. You can use the website to find out how the fair " \
+            "grade allocator works."
+
+    print(about)
     await_input_for_main_menu()
 
 
-def valid_member_count_input(member_count_input) -> bool:
+def is_member_count_input_valid(member_count_input) -> bool:
+    """
+    Checks if the users input for the number of members is valid
+
+    :param member_count_input: A (str) which represents the users input when queried for the number
+    of members in the project
+    :return: True if the input is an integer and is valid
+    """
     return member_count_input.isdigit() and int(member_count_input) > 2
 
 
@@ -127,7 +141,7 @@ def get_new_project_member_count():
         (int) the number of members the new project should have. Will be at least 3
     """
     num_of_members = input("Enter the number of team members: ")
-    while not valid_member_count_input(num_of_members):
+    while not is_member_count_input_valid(num_of_members):
         num_of_members = input("Incorrect input. Please enter the number of team members: ")
     num_of_members = int(num_of_members)
     return num_of_members
