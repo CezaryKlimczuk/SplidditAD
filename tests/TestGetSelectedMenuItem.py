@@ -4,7 +4,7 @@ from unittest.mock import patch
 from UCL_project import *
 
 
-class UCL_project_test(TestCase):
+class TestGetSelectedMenuItem(TestCase):
 
     @patch("UCL_project.get_input", return_value="a")
     def test_get_selected_menu_item_returns_about_for_a(self, input):
