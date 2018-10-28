@@ -3,6 +3,9 @@ class Project:
         self.name = project_name
         self.members = members
 
+    def get_member_count(self):
+        return len(self.members)
+
 
 class Person:
     def __init__(self, name):
@@ -100,7 +103,7 @@ def get_project_member(member_index, current_team_members):
     :param current_team_members: a list of team members entered so far
     :return: a Person which has a unique name not currently present in current_team_members
     """
-    member_name = str(input("     Enter the name of team member {}: ".format(member_index + 1)))
+    member_name = str(input("     Enter the name of team member %s: " % (member_index + 1)))
     # Checking if the same member is not entered twice
     while member_name in [member.name for member in current_team_members]:
         member_name = str(
@@ -132,34 +135,28 @@ def get_new_project_member_count():
 
 
 def enter_votes():  # This function calculates the share of each member in a given project
-    name = input('Enter the project name: ')
-    # Checking if the name is in the list
-    while name not in [x.name for x in projects]:
-        name = input('Incorrect project name, please enter the project name:')
-    # Finding a project in the list
-    chosen_project = [x for x in projects if x.name == name][0]
-    num_of_members = len(chosen_project.members)
-    print('There are {} team members.'.format(num_of_members))
+    project = get_project_from_user()
+    print('There are %s team members.' % project.get_member_count())
     # The process of assigning votes starts here
     points_given = []  # A list of the sum of votes given by each member
     points_assigned_correctly = False  # All values need to be equal to 100, ergo False
     while not points_assigned_correctly:
         # Iterating through all members in a project
-        for member in chosen_project.members:
-            print("\nEnter {}'s votes, points must add up to 100:\n".format(member.name))
+        for member in project.members:
+            print("\nEnter %s's votes, points must add up to 100:\n" % member.name)
             points_left = 100  # The number of disposable votes for each member
             # Iterating through all partners of a member
-            how_many_partners_left = len(chosen_project.members) - 2
+            how_many_partners_left = len(project.members) - 2
             # This will be used to ensure that no partner is left with zero points (check WHILE NOT below)
             HMPL = how_many_partners_left
-            for other_member in chosen_project.members:
+            for other_member in project.members:
                 if other_member != member:
-                    points = input("Enter {}'s points for {}:".format(member.name, other_member.name))
+                    points = input("Enter %s's points for %s:" % (member.name, other_member.name))
                     # Checking if the votes are non-negative
                     # And their sum is not greater than disposable votes
                     while not (points.isdigit() and 0 < int(points) <= points_left - HMPL):
                         points = input(
-                            "Incorrect input. Enter {}'s points for {}:".format(member.name, other_member.name))
+                            "Incorrect input. Enter %s's points for %s:" % (member.name, other_member.name))
                     other_member.votes.append(int(points))  # Adding votes to a member
                     points_left -= int(points)  # Decreasing the number of disposable votes left
                     HMPL -= 1
@@ -171,21 +168,35 @@ def enter_votes():  # This function calculates the share of each member in a giv
             if x != 100:
                 points_assigned_correctly = False
                 print('\nPoints from every member have to add up to 100. Please try again.\n')
-                for any_member in chosen_project.members:
+                for any_member in project.members:
                     any_member.votes = []
                 points_given = []
                 break
     # If all votes have been assigned correctly, calculate the share of each member.
     # Store the share in Person object
-    for member in chosen_project.members:
+    for member in project.members:
         denominator = 1
         for vote in member.votes:
             denominator += (100 - vote) / vote
         member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
     # Masz tutaj wyniki gdybyś chciał sprawdzić jak to wszystko działa. Enjoy ^^
-    for member in chosen_project.members:
-        print('{} - {}'.format(member.name, member.share))
-    return True
+    for member in project.members:
+        print('%s - %s' % (member.name, member.share))
+
+
+def get_project_from_user():
+    """
+    Gets a Project for a project name supplied by the user
+
+    :return: a Project
+    """
+    name = input('Enter the project name: ')
+    # Checking if the name is in the list
+    while name not in [x.name for x in projects]:
+        name = input('Incorrect project name, please enter the project name:')
+    # Finding a project in the list
+    chosen_project = [x for x in projects if x.name == name][0]
+    return chosen_project
 
 
 # programme goes here
