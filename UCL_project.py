@@ -177,12 +177,16 @@ def get_assigned_points(assignor, assignee, points_left, remaining_members_count
     :param assignee: (Person) The project member who is being given points by the assignor
     :param points_left: (int) The number of points the assignor has remaining to assign
     :param remaining_members_count: The number of members the assignor still has to allocate points to afterwards
-    :return: (int) The number of points the assignor allocated to the assignee
+    :return: (int) The number of points the assignor allocated to the assignee. Between 0 (inclusive) and points_left (inclusive)
     """
     points = input("Enter %s's points for %s:" % (assignor.name, assignee.name))
-    # Checking if the votes are non-negative
-    # And their sum is not greater than disposable votes
-    while not (points.isdigit() and 0 < int(points) <= points_left - remaining_members_count):
+    # Validate:
+    # Must be integer
+    # Last member has exactly points_left assigned to sum up to 100
+    # If not last member, desired assigned point count is within range
+    while (not points.isdigit()) \
+            or remaining_members_count == 0 and int(points) != points_left \
+            or not (0 <= int(points) <= points_left):
         points = input("Incorrect input. Enter %s's points for %s:" % (assignor.name, assignee.name))
 
     return int(points)
