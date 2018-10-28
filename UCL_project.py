@@ -35,14 +35,10 @@ def print_main_menu():
 
 
 def get_selected_menu_item():
-    option = str(get_input("  Please choose an option: ")).upper().strip()
+    option = str(input("  Please choose an option: ")).upper().strip()
     while option not in all_options:
-        option = str(get_input("  Incorrect input. Please choose an option: ")).upper().strip()
+        option = str(input("  Incorrect input. Please choose an option: ")).upper().strip()
     return option
-
-
-def get_input(msg):
-    return input(msg)
 
 
 def print_about():
@@ -79,7 +75,7 @@ def await_input_for_main_menu():
     """
     Requests the user to input anything to return to the main menu
     """
-    get_input('Press any key to return to the main menu: ')
+    input('Press any key to return to the main menu: ')
 
 
 def get_new_project_member_names(num_of_members):
@@ -106,11 +102,11 @@ def get_project_member(member_index, current_team_members):
     :param current_team_members: a list of team members entered so far
     :return: a Person which has a unique name not currently present in current_team_members
     """
-    member_name = str(get_input("     Enter the name of team member %s: " % (member_index + 1)))
+    member_name = str(input("     Enter the name of team member %s: " % (member_index + 1)))
     # Checking if the same member is not entered twice
     while member_name in [member.name for member in current_team_members]:
         member_name = str(
-            get_input(
+            input(
                 "     %s already in the team. Enter the name of team member %s: " % (member_name, member_index + 1)))
     return Person(member_name)
 
@@ -121,7 +117,7 @@ def get_new_project_name():
     :return:
         (str) the project name. Can be empty or the same as a previous project name
     """
-    return str(get_input("Enter the project name: "))
+    return str(input("Enter the project name: "))
 
 
 def get_new_project_member_count():
@@ -130,9 +126,9 @@ def get_new_project_member_count():
     :return:
         (int) the number of members the new project should have. Will be at least 3
     """
-    num_of_members = get_input("Enter the number of team members: ")
+    num_of_members = input("Enter the number of team members: ")
     while not valid_member_count_input(num_of_members):
-        num_of_members = get_input("Incorrect input. Please enter the number of team members: ")
+        num_of_members = input("Incorrect input. Please enter the number of team members: ")
     num_of_members = int(num_of_members)
     return num_of_members
 
@@ -183,7 +179,7 @@ def get_assigned_points(assignor, assignee, points_left, remaining_members_count
     :param remaining_members_count: The number of members the assignor still has to allocate points to afterwards
     :return: (int) The number of points the assignor allocated to the assignee. Between 0 (inclusive) and points_left (inclusive)
     """
-    points = get_input("Enter %s's points for %s:" % (assignor.name, assignee.name))
+    points = input("Enter %s's points for %s:" % (assignor.name, assignee.name))
     # Validate:
     # Must be integer
     # Last member has exactly points_left assigned to sum up to 100
@@ -191,7 +187,7 @@ def get_assigned_points(assignor, assignee, points_left, remaining_members_count
     while (not points.isdigit()) \
             or remaining_members_count == 0 and int(points) != points_left \
             or not (0 <= int(points) <= points_left):
-        points = get_input("Incorrect input. Enter %s's points for %s:" % (assignor.name, assignee.name))
+        points = input("Incorrect input. Enter %s's points for %s:" % (assignor.name, assignee.name))
 
     return int(points)
 
@@ -219,10 +215,10 @@ def get_project_from_user():
 
     :return: a Project
     """
-    name = get_input('Enter the project name: ')
+    name = input('Enter the project name: ')
     # Checking if the name is in the list
     while name not in [x.name for x in projects]:
-        name = get_input('Incorrect project name, please enter the project name:')
+        name = input('Incorrect project name, please enter the project name:')
     # Finding a project in the list
     chosen_project = [x for x in projects if x.name == name][0]
     return chosen_project
