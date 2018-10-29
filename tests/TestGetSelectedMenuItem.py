@@ -2,7 +2,7 @@ import builtins
 from contextlib import contextmanager
 from unittest import TestCase
 
-from UCL_project import *
+from ucl_project import *
 
 
 @contextmanager
