@@ -1,12 +1,11 @@
 from project import Project, Person
-from project_repository import ProjectRepository
 
 
 class ProjectCreator:
 
-    def __init__(self) -> None:
+    def __init__(self, repo) -> None:
         super().__init__()
-        self.repo = ProjectRepository()
+        self.repo = repo
 
     def create_new_project(self):
         """
@@ -16,17 +15,17 @@ class ProjectCreator:
         :return: a new Project
         """
         # TODO project name must be unique. Update documentation when fixed
-        project_name = self.get_new_project_name()
-        num_of_members = self.get_new_project_member_count()
+        project_name = self.__get_new_project_name()
+        num_of_members = self.__get_new_project_member_count()
         print('\n')
-        team_members = self.get_new_project_member_names(num_of_members)
+        team_members = self.__get_new_project_member_names(num_of_members)
         print('\n')
         project = Project(project_name, team_members)
         self.repo.put(project)
         return project
 
     @staticmethod
-    def get_new_project_name():
+    def __get_new_project_name():
         """
         Queries the user for a new project name.
 
@@ -35,7 +34,7 @@ class ProjectCreator:
         """
         return str(input("Enter the project name: "))
 
-    def get_new_project_member_count(self):
+    def __get_new_project_member_count(self):
         """
         Queries the user for the number of members for a new project
 
@@ -43,13 +42,13 @@ class ProjectCreator:
             (int) the number of members the new project should have. Will be at least 3
         """
         num_of_members = input("Enter the number of team members: ")
-        while not self.is_member_count_input_valid(num_of_members):
+        while not self.__is_member_count_input_valid(num_of_members):
             num_of_members = input("Incorrect input. Please enter the number of team members: ")
         num_of_members = int(num_of_members)
         return num_of_members
 
     @staticmethod
-    def is_member_count_input_valid(member_count_input) -> bool:
+    def __is_member_count_input_valid(member_count_input) -> bool:
         """
         Checks if the users input for the number of members is valid
 
@@ -59,7 +58,7 @@ class ProjectCreator:
         """
         return member_count_input.isdigit() and int(member_count_input) > 2
 
-    def get_new_project_member_names(self, num_of_members):
+    def __get_new_project_member_names(self, num_of_members):
         """
         Gets the names of the project members from the user and validates the inputs
 
@@ -68,13 +67,13 @@ class ProjectCreator:
         """
         project_members = []
         for member_index in range(num_of_members):
-            member = self.get_project_member(member_index, project_members)
+            member = self.__get_project_member(member_index, project_members)
             project_members.append(member)
 
         return project_members
 
     @staticmethod
-    def get_project_member(member_index, current_team_members):
+    def __get_project_member(member_index, current_team_members):
         """
         Queries the user for a member name until it is unique and returns a new Person
 

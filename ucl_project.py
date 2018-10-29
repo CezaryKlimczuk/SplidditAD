@@ -1,4 +1,5 @@
 from project_creator import ProjectCreator
+from project_repository import ProjectRepository
 
 option_about = 'A'
 option_create_project = 'C'
@@ -8,7 +9,8 @@ option_quit = 'Q'
 
 all_options = [option_about, option_create_project, option_enter_votes, option_show_project, option_quit]
 
-project_manager = ProjectCreator()
+project_repo = ProjectRepository()
+project_manager = ProjectCreator(project_repo)
 
 
 def print_main_menu():
@@ -150,10 +152,10 @@ def get_project_from_user():
     """
     name = input('Enter the project name: ')
     # Checking if the name is in the list
-    while name not in [x.name for x in projects]:
+    while name not in [x.name for x in project_repo.projects]:
         name = input('Incorrect project name, please enter the project name:')
     # Finding a project in the list
-    chosen_project = [x for x in projects if x.name == name][0]
+    chosen_project = [x for x in project_repo.projects if x.name == name][0]
     return chosen_project
 
 

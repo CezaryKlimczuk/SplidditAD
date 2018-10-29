@@ -1,10 +1,11 @@
-projects = []
-
-
 class ProjectRepository:
 
+    def __init__(self) -> None:
+        super().__init__()
+        self.projects = []
+
     def put(self, project):
-        projects.append(project)
+        self.projects.append(project)
 
     def delete(self, project):
-        projects.remove(project)
+        self.projects.remove(project)
