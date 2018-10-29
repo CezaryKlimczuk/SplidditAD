@@ -17,5 +17,5 @@ class ProjectRepository:
         :param name: The name of the project
         :return: The first project to be found with the given name, or None if there are none that have such a name
         """
-        projects_for_name = [project for project in self.__projects if project.name == name]
+        projects_for_name = (project for project in self.__projects if project.name == name)
         return next(projects_for_name, None)
