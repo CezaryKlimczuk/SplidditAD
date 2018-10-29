@@ -151,12 +151,13 @@ def get_project_from_user():
     :return: a Project
     """
     name = input('Enter the project name: ')
-    # Checking if the name is in the list
-    while name not in [x.name for x in project_repo.projects]:
+    project = project_repo.find_by_name(name)
+
+    while project is None:
         name = input('Incorrect project name, please enter the project name:')
-    # Finding a project in the list
-    chosen_project = [x for x in project_repo.projects if x.name == name][0]
-    return chosen_project
+        project = project_repo.find_by_name(name)
+
+    return project
 
 
 def on_show_project_requested():
