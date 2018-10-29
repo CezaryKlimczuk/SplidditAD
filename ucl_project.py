@@ -70,7 +70,7 @@ def get_selected_menu_item():
     return option
 
 
-def print_about():
+def on_print_about_requested():
     """
     Prints information about the program, and awaits user input to return to the menu
     """
@@ -240,7 +240,7 @@ def get_assigned_points(assignor, assignee, points_left, remaining_members_count
     return int(points)
 
 
-def enter_votes():
+def on_enter_votes_requested():
     """
     Queries the user for a project name, finds the project, queries user for votes, and calculates finally calculated
     the share of each member in a given project
@@ -276,6 +276,14 @@ def get_project_from_user():
     return chosen_project
 
 
+def on_show_project_requested():
+    """
+    The user has requested to show a project
+    """
+    project = get_project_from_user()
+    show_project_details(project)
+
+
 def show_project_details(project):
     """
     Prints the number of team members and the scores of each team member
@@ -300,14 +308,6 @@ def show_project_details(project):
     await_input_for_main_menu()
 
 
-def on_show_project_requested():
-    """
-    The user has requested to show a project
-    """
-    project = get_project_from_user()
-    show_project_details(project)
-
-
 def main():
     """
     Most important part of the program. Responsible for the main menu
@@ -318,13 +318,17 @@ def main():
         selected_option = get_selected_menu_item()
 
         if selected_option == option_about:
-            print_about()
+            on_print_about_requested()
         elif selected_option == option_create_project:
-            projects.append(create_new_project())  # Adds a new project object to the list
+            on_create_project_requested()
         elif selected_option == option_enter_votes:
-            enter_votes()
+            on_enter_votes_requested()
         elif selected_option == option_show_project:
             on_show_project_requested()
+
+
+def on_create_project_requested():
+    projects.append(create_new_project())  # Adds a new project object to the list
 
 
 if __name__ == '__main__':
