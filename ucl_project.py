@@ -1,4 +1,4 @@
-from project import Project, Person
+from project_creator import ProjectCreator
 
 option_about = 'A'
 option_create_project = 'C'
@@ -8,7 +8,7 @@ option_quit = 'Q'
 
 all_options = [option_about, option_create_project, option_enter_votes, option_show_project, option_quit]
 
-projects = []
+project_manager = ProjectCreator()
 
 
 def print_main_menu():
@@ -51,95 +51,11 @@ def on_print_about_requested():
     await_input_for_main_menu()
 
 
-def is_member_count_input_valid(member_count_input) -> bool:
-    """
-    Checks if the users input for the number of members is valid
-
-    :param member_count_input: A (str) which represents the users input when queried for the number
-    of members in the project
-    :return: True if the input is an integer and is valid
-    """
-    return member_count_input.isdigit() and int(member_count_input) > 2
-
-
-def create_new_project():
-    """
-    Queries the user to create a new project. The name might be the same as a previous project.
-    It does not add the returned Project to a repository, this is left to the caller
-
-    :return: a new Project
-    """
-    # TODO project name must be unique. Update documentation when fixed
-    project_name = get_new_project_name()
-    num_of_members = get_new_project_member_count()
-    print('\n')
-    team_members = get_new_project_member_names(num_of_members)
-    print('\n')
-    await_input_for_main_menu()
-    return Project(project_name, team_members)
-
-
 def await_input_for_main_menu():
     """
     Requests the user to input anything to return to the main menu
     """
     input('Press any key to return to the main menu: ')
-
-
-def get_new_project_member_names(num_of_members):
-    """
-    Gets the names of the project members from the user and validates the inputs
-
-    :param num_of_members: (int) how many unique member names there will be in the project
-    :return: a list of size num_of_members containing unique entries
-    """
-    project_members = []
-    for member_index in range(num_of_members):
-        member = get_project_member(member_index, project_members)
-        project_members.append(member)
-
-    return project_members
-
-
-def get_project_member(member_index, current_team_members):
-    """
-    Queries the user for a member name until it is unique and returns a new Person
-
-    :param member_index: (int) a non-negative integer  indicating the position in current_team_members that the member represents
-    :param current_team_members: a list of team members entered so far
-    :return: a Person which has a unique name not currently present in current_team_members
-    """
-    member_name = str(input("     Enter the name of team member %s: " % (member_index + 1)))
-    # Checking if the same member is not entered twice
-    while member_name in [member.name for member in current_team_members]:
-        member_name = str(
-            input(
-                "     %s already in the team. Enter the name of team member %s: " % (member_name, member_index + 1)))
-    return Person(member_name)
-
-
-def get_new_project_name():
-    """
-    Queries the user for a new project name.
-
-    :return:
-        (str) the project name. Can be empty or the same as a previous project name
-    """
-    return str(input("Enter the project name: "))
-
-
-def get_new_project_member_count():
-    """
-    Queries the user for the number of members for a new project
-
-    :return:
-        (int) the number of members the new project should have. Will be at least 3
-    """
-    num_of_members = input("Enter the number of team members: ")
-    while not is_member_count_input_valid(num_of_members):
-        num_of_members = input("Incorrect input. Please enter the number of team members: ")
-    num_of_members = int(num_of_members)
-    return num_of_members
 
 
 def assign_points_from_user(project):
@@ -293,7 +209,8 @@ def main():
 
 
 def on_create_project_requested():
-    projects.append(create_new_project())  # Adds a new project object to the list
+    project_manager.create_new_project()
+    await_input_for_main_menu()
 
 
 if __name__ == '__main__':
