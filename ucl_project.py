@@ -1,17 +1,38 @@
+class Person:
+    def __init__(self, name):
+        self.name = name
+        self.votes = []
+        self.share = 0
+
+    def get_total_score(self):
+        """
+        Calculates and returns the score using the share
+
+        :return: (int) The score of the member. Is between 0 (inclusive) and 100 (inclusive)
+        """
+        return round(self.share * 100)
+
+
 class Project:
     def __init__(self, project_name, members):
         self.name = project_name
         self.members = members
 
     def get_member_count(self):
+        """
+        Returns the number of members in the project
+
+        :return: int the number of members in the project
+        """
         return len(self.members)
 
+    def get_longest_member(self):
+        """
 
-class Person:
-    def __init__(self, name):
-        self.name = name
-        self.votes = []
-        self.share = 0
+        :return: a person who has the longest name in the project. If multiple people have the longest name,
+        then the result is undefined
+        """
+        return max(self.members, key=lambda x: len(x.name))
 
 
 option_about = 'A'
@@ -255,6 +276,38 @@ def get_project_from_user():
     return chosen_project
 
 
+def show_project_details(project):
+    """
+    Prints the number of team members and the scores of each team member
+
+    :param project: The project which should be displayed in the console
+    """
+    print("\n")
+    print("There are %s team members" % project.get_member_count())  # At least 3 team members so always plural
+    print("\n")
+    print("The point allocation based on votes is:")
+    print("\n")
+
+    indent_left = "\t"
+    longest_member = project.get_longest_member()
+    indent_right = "\t"
+    for member in project.members:
+        name_space_count = len(longest_member.name) - len(member.name)
+        str_right = ":" + name_space_count * " "
+        print(indent_left + member.name + str_right + indent_right + str(member.get_total_score()))
+
+    print("\n")
+    await_input_for_main_menu()
+
+
+def on_show_project_requested():
+    """
+    The user has requested to show a project
+    """
+    project = get_project_from_user()
+    show_project_details(project)
+
+
 def main():
     """
     Most important part of the program. Responsible for the main menu
@@ -270,6 +323,8 @@ def main():
             projects.append(create_new_project())  # Adds a new project object to the list
         elif selected_option == option_enter_votes:
             enter_votes()
+        elif selected_option == option_show_project:
+            on_show_project_requested()
 
 
 if __name__ == '__main__':
