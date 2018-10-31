@@ -129,31 +129,7 @@ def on_show_project_requested():
     The user has requested to show a project
     """
     project = get_project_from_user()
-    show_project_details(project)
-    menu.await_input_for_main_menu()
-
-
-def show_project_details(project):
-    """
-    Prints the number of team members and the scores of each team member
-
-    :param project: The project which should be displayed in the console
-    """
-    print("\n")
-    print("There are %s team members" % project.get_member_count())  # At least 3 team members so always plural
-    print("\n")
-    print("The point allocation based on votes is:")
-    print("\n")
-
-    indent_left = "\t"
-    longest_member = project.get_longest_member()
-    indent_right = "\t"
-    for member in project.members:
-        name_space_count = len(longest_member.name) - len(member.name)
-        str_right = ":" + name_space_count * " "
-        print(indent_left + member.name + str_right + indent_right + str(member.get_total_score()))
-
-    print("\n")
+    project.show_details()
     menu.await_input_for_main_menu()
 
 

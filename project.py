@@ -19,6 +19,31 @@ class Project:
         """
         return max(self.members, key=lambda x: len(x.name))
 
+    def show_details(self):
+        """
+        Prints the number of team members and the scores of each team member
+        """
+        print(self)
+
+    def __str__(self) -> str:
+        details = ""
+        details += "\n"
+        details += ("There are %s team members\n" % self.get_member_count())  # At least 3 team members so always plural
+        details += "\n"
+        details += "The point allocation based on votes is:\n"
+        details += "\n"
+
+        indent_left = "\t"
+        longest_member = self.get_longest_member()
+        indent_right = "\t"
+        for member in self.members:
+            name_space_count = len(longest_member.name) - len(member.name)
+            str_right = ":" + name_space_count * " "
+            details += (indent_left + member.name + str_right + indent_right + str(member.get_total_score())) + "\n"
+
+        details += "\n"
+        return details
+
 
 class Person:
     def __init__(self, name):
