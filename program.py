@@ -3,7 +3,7 @@ from project_creator import ProjectCreator
 from project_repository import ProjectRepository
 
 project_repo = ProjectRepository()
-project_manager = ProjectCreator(project_repo)
+project_creator = ProjectCreator(project_repo)
 
 
 def on_print_about_requested():
@@ -181,7 +181,7 @@ def main():
 
 
 def on_create_project_requested():
-    project_manager.create_new_project()
+    project_creator.create_new_project()
     await_input_for_main_menu()
 
 
