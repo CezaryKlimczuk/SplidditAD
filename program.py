@@ -19,14 +19,7 @@ def on_print_about_requested():
             "grade allocator works."
 
     print(about)
-    await_input_for_main_menu()
-
-
-def await_input_for_main_menu():
-    """
-    Requests the user to input anything to return to the main menu
-    """
-    input('Press any key to return to the main menu: ')
+    menu.await_input_for_main_menu()
 
 
 def assign_points_from_user(project):
@@ -112,6 +105,8 @@ def on_enter_votes_requested():
     for member in project.members:
         print('%s - %s' % (member.name, member.share))
 
+    menu.await_input_for_main_menu()
+
 
 def get_project_from_user():
     """
@@ -135,6 +130,7 @@ def on_show_project_requested():
     """
     project = get_project_from_user()
     show_project_details(project)
+    menu.await_input_for_main_menu()
 
 
 def show_project_details(project):
@@ -158,7 +154,7 @@ def show_project_details(project):
         print(indent_left + member.name + str_right + indent_right + str(member.get_total_score()))
 
     print("\n")
-    await_input_for_main_menu()
+    menu.await_input_for_main_menu()
 
 
 def main():
@@ -182,7 +178,7 @@ def main():
 
 def on_create_project_requested():
     project_creator.create_new_project()
-    await_input_for_main_menu()
+    menu.await_input_for_main_menu()
 
 
 if __name__ == '__main__':

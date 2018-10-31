@@ -29,3 +29,10 @@ def get_selected_menu_item():
     while option not in all_options:
         option = str(input("  Incorrect input. Please choose an option: ")).upper().strip()
     return option
+
+
+def await_input_for_main_menu():
+    """
+    Requests the user to input anything to return to the main menu
+    """
+    input('Press any key to return to the main menu: ')
