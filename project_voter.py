@@ -22,8 +22,8 @@ class ProjectVoter():
                 # This will be used to ensure that no partner is left with zero points (check WHILE NOT below)
                 for assignee in project.members:
                     if assignee != assignor:
-                        points_input = self.get_assigned_points(assignor, assignee, remaining_points,
-                                                                remaining_members_count)
+                        points_input = self.__get_assigned_points(assignor, assignee, remaining_points,
+                                                                  remaining_members_count)
 
                         assignee.votes.append(points_input)  # Adding votes to a member
                         remaining_points -= points_input  # Decreasing the number of disposable votes left
@@ -44,7 +44,8 @@ class ProjectVoter():
                     points = []
                     break
 
-    def get_assigned_points(self, assignor, assignee, points_left, remaining_members_count):
+    @staticmethod
+    def __get_assigned_points(assignor, assignee, points_left, remaining_members_count):
         """
         Queries the user for points to allocate from assignor to assignee
 
