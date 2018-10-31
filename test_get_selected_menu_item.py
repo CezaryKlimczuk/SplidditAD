@@ -2,7 +2,7 @@ import builtins
 from contextlib import contextmanager
 from unittest import TestCase
 
-from menu import get_selected_menu_item
+import menu
 
 
 @contextmanager
@@ -15,7 +15,7 @@ def mock_input(mock):
 
 def test_get_selected_menu_item(test_case: TestCase, mock_input_val, expected):
     with mock_input(mock_input_val):
-        item = get_selected_menu_item()
+        item = menu.get_selected_menu_item()
         test_case.assertEqual(item, expected)
 
 
@@ -29,10 +29,10 @@ class TestGetSelectedMenuItem(TestCase):
 
         TODO test invalid input
         """
-        test_get_selected_menu_item(self, "a", option_about)
-        test_get_selected_menu_item(self, "c", option_create_project)
-        test_get_selected_menu_item(self, "v", option_enter_votes)
-        test_get_selected_menu_item(self, "s", option_show_project)
-        test_get_selected_menu_item(self, "q", option_quit)
-        test_get_selected_menu_item(self, "C", option_create_project)
-        test_get_selected_menu_item(self, "  C ", option_create_project)
+        test_get_selected_menu_item(self, "a", menu.about)
+        test_get_selected_menu_item(self, "c", menu.create_project)
+        test_get_selected_menu_item(self, "v", menu.enter_votes)
+        test_get_selected_menu_item(self, "s", menu.show_project)
+        test_get_selected_menu_item(self, "q", menu.quit_program)
+        test_get_selected_menu_item(self, "C", menu.create_project)
+        test_get_selected_menu_item(self, "  C ", menu.create_project)
