@@ -6,6 +6,25 @@ project_repo = ProjectRepository()
 project_creator = ProjectCreator(project_repo)
 
 
+def main():
+    """
+    Most important part of the program. Responsible for the main menu
+    """
+    selected_option = None
+    while selected_option != menu.quit_program:
+        menu.print_main_menu()
+        selected_option = menu.get_selected_menu_item()
+
+        if selected_option == menu.about:
+            on_print_about_requested()
+        elif selected_option == menu.create_project:
+            on_create_project_requested()
+        elif selected_option == menu.enter_votes:
+            on_enter_votes_requested()
+        elif selected_option == menu.show_project:
+            on_show_project_requested()
+
+
 def on_print_about_requested():
     """
     Prints information about the program, and awaits user input to return to the menu
@@ -19,6 +38,43 @@ def on_print_about_requested():
             "grade allocator works."
 
     print(about)
+    menu.await_input_for_main_menu()
+
+
+def on_create_project_requested():
+    project_creator.create_new_project()
+    menu.await_input_for_main_menu()
+
+
+def on_enter_votes_requested():
+    """
+    Queries the user for a project name, finds the project, queries user for votes, and calculates finally calculated
+    the share of each member in a given project
+    """
+    project = get_project_from_user()
+    print('There are %s team members.' % project.get_member_count())
+    assign_points_from_user(project)
+
+    # Calculate and store the share for each member
+    for member in project.members:
+        denominator = 1
+        for vote in member.votes:
+            denominator += (100 - vote) / vote
+        member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
+
+    # Masz tutaj wyniki gdybyś chciał sprawdzić jak to wszystko działa. Enjoy ^^
+    for member in project.members:
+        print('%s - %s' % (member.name, member.share))
+
+    menu.await_input_for_main_menu()
+
+
+def on_show_project_requested():
+    """
+    The user has requested to show a project
+    """
+    project = get_project_from_user()
+    project.show_details()
     menu.await_input_for_main_menu()
 
 
@@ -85,29 +141,6 @@ def get_assigned_points(assignor, assignee, points_left, remaining_members_count
     return int(points)
 
 
-def on_enter_votes_requested():
-    """
-    Queries the user for a project name, finds the project, queries user for votes, and calculates finally calculated
-    the share of each member in a given project
-    """
-    project = get_project_from_user()
-    print('There are %s team members.' % project.get_member_count())
-    assign_points_from_user(project)
-
-    # Calculate and store the share for each member
-    for member in project.members:
-        denominator = 1
-        for vote in member.votes:
-            denominator += (100 - vote) / vote
-        member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
-
-    # Masz tutaj wyniki gdybyś chciał sprawdzić jak to wszystko działa. Enjoy ^^
-    for member in project.members:
-        print('%s - %s' % (member.name, member.share))
-
-    menu.await_input_for_main_menu()
-
-
 def get_project_from_user():
     """
     Queries the user for a project name and returns the first project that has that name.
@@ -122,39 +155,6 @@ def get_project_from_user():
         project = project_repo.find_by_name(name)
 
     return project
-
-
-def on_show_project_requested():
-    """
-    The user has requested to show a project
-    """
-    project = get_project_from_user()
-    project.show_details()
-    menu.await_input_for_main_menu()
-
-
-def main():
-    """
-    Most important part of the program. Responsible for the main menu
-    """
-    selected_option = None
-    while selected_option != menu.quit_program:
-        menu.print_main_menu()
-        selected_option = menu.get_selected_menu_item()
-
-        if selected_option == menu.about:
-            on_print_about_requested()
-        elif selected_option == menu.create_project:
-            on_create_project_requested()
-        elif selected_option == menu.enter_votes:
-            on_enter_votes_requested()
-        elif selected_option == menu.show_project:
-            on_show_project_requested()
-
-
-def on_create_project_requested():
-    project_creator.create_new_project()
-    menu.await_input_for_main_menu()
 
 
 if __name__ == '__main__':
