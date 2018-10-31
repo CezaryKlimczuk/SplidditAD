@@ -1,40 +1,9 @@
+import menu
 from project_creator import ProjectCreator
 from project_repository import ProjectRepository
 
-option_about = 'A'
-option_create_project = 'C'
-option_enter_votes = 'V'
-option_show_project = 'S'
-option_quit = 'Q'
-
-all_options = [option_about, option_create_project, option_enter_votes, option_show_project, option_quit]
-
 project_repo = ProjectRepository()
 project_manager = ProjectCreator(project_repo)
-
-
-def print_main_menu():
-    """
-    Prints the main menu
-    """
-    print('Welcome to Split-it\n\n'
-          '  About           (A)\n'
-          '  Create Project  (C)\n'
-          '  Enter Votes     (V)\n'
-          '  Show Project    (S)\n'
-          '  Quit            (Q)\n')
-
-
-def get_selected_menu_item():
-    """
-    Queries the user to enter the shortcut for a menu item. users query is case insensitive and whitespace is stripped.
-
-    :return: an element of all_options
-    """
-    option = str(input("  Please choose an option: ")).upper().strip()
-    while option not in all_options:
-        option = str(input("  Incorrect input. Please choose an option: ")).upper().strip()
-    return option
 
 
 def on_print_about_requested():
@@ -197,17 +166,17 @@ def main():
     Most important part of the program. Responsible for the main menu
     """
     selected_option = None
-    while selected_option != option_quit:
-        print_main_menu()
-        selected_option = get_selected_menu_item()
+    while selected_option != menu.quit_program:
+        menu.print_main_menu()
+        selected_option = menu.get_selected_menu_item()
 
-        if selected_option == option_about:
+        if selected_option == menu.about:
             on_print_about_requested()
-        elif selected_option == option_create_project:
+        elif selected_option == menu.create_project:
             on_create_project_requested()
-        elif selected_option == option_enter_votes:
+        elif selected_option == menu.enter_votes:
             on_enter_votes_requested()
-        elif selected_option == option_show_project:
+        elif selected_option == menu.show_project:
             on_show_project_requested()
 
 

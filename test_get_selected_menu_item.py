@@ -2,7 +2,7 @@ import builtins
 from contextlib import contextmanager
 from unittest import TestCase
 
-from ucl_project import *
+from menu import get_selected_menu_item
 
 
 @contextmanager
