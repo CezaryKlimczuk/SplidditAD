@@ -24,6 +24,9 @@ def main():
         elif selected_option == menu.show_project:
             on_show_project_requested()
 
+        if selected_option != menu.quit_program:
+            menu.await_input_for_main_menu()
+
 
 def on_print_about_requested():
     """
@@ -38,12 +41,10 @@ def on_print_about_requested():
             "grade allocator works."
 
     print(about)
-    menu.await_input_for_main_menu()
 
 
 def on_create_project_requested():
     project_creator.create_new_project()
-    menu.await_input_for_main_menu()
 
 
 def on_enter_votes_requested():
@@ -66,8 +67,6 @@ def on_enter_votes_requested():
     for member in project.members:
         print('%s - %s' % (member.name, member.share))
 
-    menu.await_input_for_main_menu()
-
 
 def on_show_project_requested():
     """
@@ -75,7 +74,6 @@ def on_show_project_requested():
     """
     project = get_project_from_user()
     project.show_details()
-    menu.await_input_for_main_menu()
 
 
 def assign_points_from_user(project):
