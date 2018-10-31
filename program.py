@@ -1,9 +1,11 @@
 import menu
 from project_creator import ProjectCreator
 from project_repository import ProjectRepository
+from project_retriever import ProjectRetriever
 
 project_repo = ProjectRepository()
 project_creator = ProjectCreator(project_repo)
+project_retriever = ProjectRetriever(project_repo)
 
 
 def main():
@@ -52,7 +54,7 @@ def on_enter_votes_requested():
     Queries the user for a project name, finds the project, queries user for votes, and calculates finally calculated
     the share of each member in a given project
     """
-    project = get_project_from_user()
+    project = project_retriever.get_project_from_user()
     print('There are %s team members.' % project.get_member_count())
     assign_points_from_user(project)
 
@@ -72,7 +74,7 @@ def on_show_project_requested():
     """
     The user has requested to show a project
     """
-    project = get_project_from_user()
+    project = project_retriever.get_project_from_user()
     project.show_details()
 
 
@@ -137,22 +139,6 @@ def get_assigned_points(assignor, assignee, points_left, remaining_members_count
         points = input("Incorrect input. Enter %s's points for %s:" % (assignor.name, assignee.name))
 
     return int(points)
-
-
-def get_project_from_user():
-    """
-    Queries the user for a project name and returns the first project that has that name.
-
-    :return: a Project
-    """
-    name = input('Enter the project name: ')
-    project = project_repo.find_by_name(name)
-
-    while project is None:
-        name = input('Incorrect project name, please enter the project name:')
-        project = project_repo.find_by_name(name)
-
-    return project
 
 
 if __name__ == '__main__':
