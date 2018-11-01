@@ -44,13 +44,20 @@ class ProjectsImporter:
             expected_row_size = 1 + 1 + member_count + member_count + member_count * (member_count - 1) * 2
             assert expected_row_size == len(row)
 
+            # TODO use a dict name -> member
             members = []
+            member_names = set()
             for member_index in range(member_count):
                 member_name = row[2 + member_index]
                 member = Person(member_name)
                 members.append(member)
-            for i in range(member_count):
-                from_index = 2 + member_count + i * (1 + (member_count - 1) * 2)
+                member_names.add(member.name)
+
+            # assert that we have the correct number of unique names
+            assert len(member_names) == member_count
+
+            for member_index in range(member_count):
+                from_index = 2 + member_count + member_index * (1 + (member_count - 1) * 2)
                 to_index = from_index + (1 + (member_count - 1) * 2)
                 vote_section = row[from_index:to_index]
                 voter_name = vote_section[0]
