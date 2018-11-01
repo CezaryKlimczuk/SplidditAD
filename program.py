@@ -17,7 +17,18 @@ project_importer = ProjectsImporter(projects_file, project_repo)
 
 def main():
     """
-    Most important part of the program. Responsible for the main menu
+    Most important part of the program. Responsible for handling menu items.
+    Once this method exits, the program is no longer running.
+
+    on_open() is always called first
+
+    on_print_about_requested()
+    on_create_project_requested()
+    on_enter_votes_requested()
+    on_show_project_requested()
+    are called for the corresponding menu items
+
+    on_quit() is always called just before the program terminates from user selecting quit menu item
     """
     on_open()
     selected_option = None
@@ -34,19 +45,24 @@ def main():
         elif selected_option == menu.show_project:
             on_show_project_requested()
 
-        if selected_option == menu.quit_program:
-            on_quit()
-        else:
+        if selected_option != menu.quit_program:
             menu.await_input_for_main_menu()
+
+    on_quit()
 
 
 def on_open():
+    """
+    Called whenever the program is started
+
+    Project requirements state that the projects should be loaded from disk at this point
+    """
     project_importer.import_projects()
 
 
 def on_print_about_requested():
     """
-    Prints information about the program, and awaits user input to return to the menu
+    Prints information about the program
     """
     about = "This is a Fair Grade Allocator. The purpose of the application is to help teams allocate the credit for a " \
             "project so that all parties are satisfied with the outcome. The idea is inspired by the work of " \
@@ -60,13 +76,16 @@ def on_print_about_requested():
 
 
 def on_create_project_requested():
+    """
+    Queries the user to create a new project
+    """
     project_creator.create_new_project()
 
 
 def on_enter_votes_requested():
     """
-    Queries the user for a project name, finds the project, queries user for votes, and calculates finally calculated
-    the share of each member in a given project
+    Queries the user for a project name, finds the project, queries user for votes, and finally calculates the share
+    of each member in a given project
     """
     project = project_retriever.get_project_from_user()
     print('There are %s team members.' % project.get_member_count())
@@ -86,6 +105,11 @@ def on_show_project_requested():
 
 
 def on_quit():
+    """
+    Called just before program terminates
+
+    Program requirements dictate that projects should be exported to disk at this point
+    """
     project_exporter.export_projects()
 
 
