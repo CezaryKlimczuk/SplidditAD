@@ -49,8 +49,11 @@ class Project:
         # Calculate and store the share for each member
         for member in self.members:
             denominator = 1
-            for vote in member.votes.values():
-                denominator += (100 - vote) / vote
+            for voter in self.members:
+                if voter != member:
+                    vote = voter.votes[member]
+                    denominator += (100 - vote) / vote
+
             member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
 
 
