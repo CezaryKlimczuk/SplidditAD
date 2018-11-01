@@ -45,7 +45,7 @@ class ProjectsImporter:
 
                                 for target_member in members:
                                     if target_member.name == target_member_name:
-                                        member.votes[member] = int(target_member_vote)
+                                        member.votes[target_member] = int(target_member_vote)
 
                 project = Project(project_name, members)
                 project.calculate_shares()
