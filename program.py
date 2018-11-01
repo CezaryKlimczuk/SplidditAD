@@ -3,17 +3,23 @@ from project_creator import ProjectCreator
 from project_repository import ProjectRepository
 from project_retriever import ProjectRetriever
 from project_voter import ProjectVoter
+from projects_exporter import ProjectsExporter
+from projects_importer import ProjectsImporter
 
 project_repo = ProjectRepository()
 project_creator = ProjectCreator(project_repo)
 project_retriever = ProjectRetriever(project_repo)
 project_voter = ProjectVoter()
+projects_file = "projects.csv"
+project_exporter = ProjectsExporter(projects_file, project_repo)
+project_importer = ProjectsImporter(projects_file, project_repo)
 
 
 def main():
     """
     Most important part of the program. Responsible for the main menu
     """
+    on_open()
     selected_option = None
     while selected_option != menu.quit_program:
         menu.print_main_menu()
@@ -27,11 +33,15 @@ def main():
             on_enter_votes_requested()
         elif selected_option == menu.show_project:
             on_show_project_requested()
-        elif selected_option == menu.quit_program:
-            on_quit()
 
-        if selected_option != menu.quit_program:
+        if selected_option == menu.quit_program:
+            on_quit()
+        else:
             menu.await_input_for_main_menu()
+
+
+def on_open():
+    project_importer.import_projects()
 
 
 def on_print_about_requested():
@@ -76,8 +86,7 @@ def on_show_project_requested():
 
 
 def on_quit():
-    project_repo.on_close()
-    pass
+    project_exporter.export_projects()
 
 
 if __name__ == '__main__':

@@ -25,22 +25,6 @@ class Project:
         """
         print(self)
 
-    def to_csv_line(self):
-        elements = [self.name, self.get_member_count()]
-
-        # Appending member count + member names
-        for member in self.members:
-            elements.append(member.name)
-
-        # Appending votes for each member
-        for member in self.members:
-            elements.append(member.name)
-            for (target_member, votes) in member.votes.items():
-                elements.append(target_member.name)
-                elements.append(votes)
-
-        return elements
-
     def __str__(self) -> str:
         details = ""
         details += "\n"
