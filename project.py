@@ -23,9 +23,6 @@ class Project:
         """
         Prints the number of team members and the scores of each team member
         """
-        print(self)
-
-    def __str__(self) -> str:
         details = ""
         details += "\n"
         details += ("There are %s team members\n" % self.get_member_count())  # At least 3 team members so always plural
@@ -42,13 +39,16 @@ class Project:
             details += (indent_left + member.name + str_right + indent_right + str(member.get_total_score())) + "\n"
 
         details += "\n"
-        return details
+
+        print(details)
+
+    def __str__(self) -> str:
+        return "Project(name=%s, members=%s)" % (self.name, str(self.members))
 
     def calculate_shares(self):
         # Calculate and store the share for each member
         for member in self.members:
             denominator = 1
-            print(member)
             for vote in member.votes.values():
                 denominator += (100 - vote) / vote
             member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
@@ -69,4 +69,18 @@ class Person:
         return round(self.share * 100)
 
     def __str__(self) -> str:
-        return "Person(" + self.name + ", " + str(self.votes) + ", " + str(self.share) + ")"
+        votes = ""
+        for (index, (member, vote)) in enumerate(self.votes.items()):
+            votes += member.name + ": " + str(vote)
+            if index != len(self.votes) - 1:
+                votes += ", "
+
+        return "Person(name=%s, votes={%s})" % (self.name, votes)
+
+    def __repr__(self) -> str:
+        # TODO
+        votes = ""
+        for (member, vote) in self.votes.items():
+            votes += member.name + ": " + str(vote)
+
+        return "Person(name=%s, votes={%s})" % (self.name, votes)

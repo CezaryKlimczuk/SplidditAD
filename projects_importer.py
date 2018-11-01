@@ -13,6 +13,10 @@ class ProjectsImporter:
     def import_projects(self):
         try:
             projects = self.__read_projects()
+            print("Imported projects: ")
+            for project in projects:
+                print(project)
+
         except MalformedCsvError:
             projects = []
 
