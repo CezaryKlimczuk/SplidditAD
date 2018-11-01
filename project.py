@@ -60,6 +60,15 @@ class Project:
         details += "\n"
         return details
 
+    def calculate_shares(self):
+        # Calculate and store the share for each member
+        for member in self.members:
+            denominator = 1
+            print(member)
+            for vote in member.votes.values():
+                denominator += (100 - vote) / vote
+            member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
+
 
 class Person:
     def __init__(self, name):
@@ -74,3 +83,6 @@ class Person:
         :return: (int) The score of the member. Is between 0 (inclusive) and 100 (inclusive)
         """
         return round(self.share * 100)
+
+    def __str__(self) -> str:
+        return "Person(" + self.name + ", " + str(self.votes) + ", " + str(self.share) + ")"
