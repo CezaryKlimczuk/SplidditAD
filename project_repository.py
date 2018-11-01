@@ -13,6 +13,9 @@ class ProjectRepository:
     def delete(self, project):
         self.__projects.remove(project)
 
+    def delete_all(self):
+        self.__projects.clear()
+
     def get_all(self):
         # TODO return a new projects list instead of existing, maybe via copy.deep_copy_list()?
         return self.__projects

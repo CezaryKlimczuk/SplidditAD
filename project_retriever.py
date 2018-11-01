@@ -1,4 +1,4 @@
-class ProjectRetriever():
+class ProjectRetriever:
 
     def __init__(self, repo) -> None:
         super().__init__()
