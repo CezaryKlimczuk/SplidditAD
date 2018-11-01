@@ -25,7 +25,7 @@ class ProjectVoter():
                         points_input = self.__get_assigned_points(assignor, assignee, remaining_points,
                                                                   remaining_members_count)
 
-                        assignee.votes.append(points_input)  # Adding votes to a member
+                        assignor.votes[assignee] = points_input  # Adding votes to a member
                         remaining_points -= points_input  # Decreasing the number of disposable votes left
                         remaining_members_count -= 1
 
@@ -40,14 +40,14 @@ class ProjectVoter():
                     points_assigned_correctly = False
                     print('\nPoints from every member have to add up to 100. Please try again.\n')
                     for any_member in project.members:
-                        any_member.votes = []
+                        any_member.votes.clear()
                     points = []
                     break
 
             # Calculate and store the share for each member
             for member in project.members:
                 denominator = 1
-                for vote in member.votes:
+                for vote in member.votes.values():
                     denominator += (100 - vote) / vote
                 member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
 

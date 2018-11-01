@@ -27,6 +27,8 @@ def main():
             on_enter_votes_requested()
         elif selected_option == menu.show_project:
             on_show_project_requested()
+        elif selected_option == menu.quit_program:
+            on_quit()
 
         if selected_option != menu.quit_program:
             menu.await_input_for_main_menu()
@@ -71,6 +73,11 @@ def on_show_project_requested():
     """
     project = project_retriever.get_project_from_user()
     project.show_details()
+
+
+def on_quit():
+    project_repo.on_close()
+    pass
 
 
 if __name__ == '__main__':
