@@ -1,7 +1,21 @@
 class Project:
     def __init__(self, project_name, members):
         self.name = project_name
+
+        self.__assert_member_names_are_unique(members)
+        self.__assert_enough_members(members)
         self.members = members
+
+    @staticmethod
+    def __assert_member_names_are_unique(members):
+        unique_member_names = set(map(lambda member: member.name, members))
+        if len(unique_member_names) != len(members):
+            raise ValueError("Duplicate member names in %s" % members)
+
+    @staticmethod
+    def __assert_enough_members(members):
+        if len(members) < 3:
+            raise ValueError("Not enough members %s. Require at least 3" % members)
 
     def get_member_count(self):
         """
