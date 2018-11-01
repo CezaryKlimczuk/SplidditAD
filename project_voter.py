@@ -44,6 +44,13 @@ class ProjectVoter():
                     points = []
                     break
 
+            # Calculate and store the share for each member
+            for member in project.members:
+                denominator = 1
+                for vote in member.votes:
+                    denominator += (100 - vote) / vote
+                member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
+
     @staticmethod
     def __get_assigned_points(assignor, assignee, points_left, remaining_members_count):
         """

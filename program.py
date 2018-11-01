@@ -60,13 +60,6 @@ def on_enter_votes_requested():
     print('There are %s team members.' % project.get_member_count())
     project_voter.assign_points_from_user(project)
 
-    # Calculate and store the share for each member
-    for member in project.members:
-        denominator = 1
-        for vote in member.votes:
-            denominator += (100 - vote) / vote
-        member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
-
     # Masz tutaj wyniki gdybyś chciał sprawdzić jak to wszystko działa. Enjoy ^^
     for member in project.members:
         print('%s - %s' % (member.name, member.share))
