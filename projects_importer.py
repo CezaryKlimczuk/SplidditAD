@@ -49,6 +49,7 @@ class ProjectsImporter:
 
                 project = Project(project_name, members)
                 project.calculate_shares()
+                projects.append(project)
 
         return projects
 
