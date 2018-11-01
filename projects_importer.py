@@ -39,6 +39,11 @@ class ProjectsImporter:
         try:
             project_name = row[0]
             member_count = int(row[1])
+
+            # name + member_count + member names + member votes
+            expected_row_size = 1 + 1 + member_count + member_count + member_count * (member_count - 1) * 2
+            assert expected_row_size == len(row)
+
             members = []
             for member_index in range(member_count):
                 member_name = row[2 + member_index]
