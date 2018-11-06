@@ -6,13 +6,13 @@ from project_voter import ProjectVoter
 from projects_exporter import ProjectsExporter
 from projects_importer import ProjectsImporter
 
-project_repo = ProjectRepository()
-project_creator = ProjectCreator(project_repo)
-project_retriever = ProjectRetriever(project_repo)
-project_voter = ProjectVoter()
+repo = ProjectRepository()
+creator = ProjectCreator(repo)
+retriever = ProjectRetriever(repo)
+voter = ProjectVoter()
 projects_file = "projects.csv"
-project_exporter = ProjectsExporter(projects_file, project_repo)
-project_importer = ProjectsImporter(projects_file, project_repo)
+exporter = ProjectsExporter(projects_file, repo)
+importer = ProjectsImporter(projects_file, repo)
 
 
 def main():
@@ -57,7 +57,7 @@ def on_open():
 
     Project requirements state that the projects should be loaded from disk at this point
     """
-    project_importer.import_projects()
+    importer.import_projects()
 
 
 def on_print_about_requested():
@@ -79,7 +79,7 @@ def on_create_project_requested():
     """
     Queries the user to create a new project
     """
-    project_creator.create_new_project()
+    creator.create_new_project()
 
 
 def on_enter_votes_requested():
@@ -87,9 +87,9 @@ def on_enter_votes_requested():
     Queries the user for a project name, finds the project, queries user for votes, and finally calculates the share
     of each member in a given project
     """
-    project = project_retriever.get_project_from_user()
+    project = retriever.get_project_from_user()
     print('There are %s team members.' % project.get_member_count())
-    project_voter.assign_points_from_user(project)
+    voter.assign_points_from_user(project)
 
     # Masz tutaj wyniki gdybyś chciał sprawdzić jak to wszystko działa. Enjoy ^^
     for member in project.members:
@@ -100,7 +100,7 @@ def on_show_project_requested():
     """
     The user has requested to show a project
     """
-    project = project_retriever.get_project_from_user()
+    project = retriever.get_project_from_user()
     project.show_details()
 
 
@@ -110,7 +110,7 @@ def on_quit():
 
     Program requirements dictate that projects should be exported to disk at this point
     """
-    project_exporter.export_projects()
+    exporter.export_projects()
 
 
 if __name__ == '__main__':
