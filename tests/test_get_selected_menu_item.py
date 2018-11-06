@@ -3,6 +3,7 @@ from contextlib import contextmanager
 from unittest import TestCase
 
 import menu
+from tests.test_helper import mock_inputs
 
 
 @contextmanager
@@ -21,13 +22,12 @@ def test_get_selected_menu_item(test_case: TestCase, mock_input_val, expected):
 
 class TestGetSelectedMenuItem(TestCase):
 
-    def test_get_selected_menu_item(self):
+    def test_valid_input(self):
         """
         Tests all possible valid shortcuts
         Tests case sensitivity
         Tests whitespace
 
-        TODO test invalid input
         """
         test_get_selected_menu_item(self, "a", menu.about)
         test_get_selected_menu_item(self, "c", menu.create_project)
@@ -36,3 +36,11 @@ class TestGetSelectedMenuItem(TestCase):
         test_get_selected_menu_item(self, "q", menu.quit_program)
         test_get_selected_menu_item(self, "C", menu.create_project)
         test_get_selected_menu_item(self, "  C ", menu.create_project)
+
+    def test_invalid_input(self):
+        """
+        Tests invalid inputs. ("p", "") and completes with valid input "v" (enter votes)
+        """
+        with mock_inputs(["p", "", "v"]):
+            selected = menu.get_selected_menu_item()
+            self.assertEqual(menu.enter_votes, selected)
