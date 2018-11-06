@@ -84,8 +84,7 @@ def on_create_project_requested():
 
 def on_enter_votes_requested():
     """
-    Queries the user for a project name, finds the project, queries user for votes, and finally calculates the share
-    of each member in a given project
+    Queries the user for a project name, finds the project, queries user for votes, and updates the project.
     """
     project = retriever.get_project_from_user()
     print('There are %s team members.' % project.get_member_count())

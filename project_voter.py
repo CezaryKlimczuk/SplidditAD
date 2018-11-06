@@ -44,8 +44,6 @@ class ProjectVoter():
                     points = []
                     break
 
-            project.calculate_shares()
-
     @staticmethod
     def __get_assigned_points(assignor, assignee, points_left, remaining_members_count):
         """

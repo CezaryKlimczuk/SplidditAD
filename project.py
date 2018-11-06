@@ -5,6 +5,8 @@ class Project:
         self.__assert_member_names_are_unique(members)
         self.__assert_enough_members(members)
         self.members = members
+        for member in members:
+            member._project = self
 
     @staticmethod
     def __assert_member_names_are_unique(members):
@@ -59,23 +61,12 @@ class Project:
     def __str__(self) -> str:
         return "Project(name=%s, members=%s)" % (self.name, str(self.members))
 
-    def calculate_shares(self):
-        # Calculate and store the share for each member
-        for member in self.members:
-            denominator = 1
-            for voter in self.members:
-                if voter != member:
-                    vote = voter.votes[member]
-                    denominator += (100 - vote) / vote
-
-            member.share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
-
 
 class Person:
     def __init__(self, name):
         self.name = name
         self.votes = {}  # Person -> points (int)
-        self.share = 0
+        self._project = None
 
     def get_total_score(self):
         """
@@ -83,7 +74,15 @@ class Person:
 
         :return: (int) The score of the member. Is between 0 (inclusive) and 100 (inclusive)
         """
-        return round(self.share * 100)
+        denominator = 1
+        for voter in self._project.members:
+            if voter != self:
+                vote = voter.votes[self]
+                denominator += (100 - vote) / vote
+
+        share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
+
+        return round(share * 100)
 
     def __str__(self) -> str:
         votes = ""

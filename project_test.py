@@ -22,7 +22,3 @@ class TestProject(TestCase):
     def test_show_details(self):
         # TODO
         pass
-
-    def test_calculate_shares(self):
-        # TODO
-        pass

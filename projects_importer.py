@@ -78,7 +78,6 @@ class ProjectsImporter:
                             raise ValueError("Duplicate votes %s" % member.votes)
 
             project = Project(project_name, members)
-            project.calculate_shares()
             return project
         except Exception as exception:
             raise MalformedCsvError(row, exception)
