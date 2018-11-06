@@ -7,6 +7,7 @@ from projects_importer import ProjectsImporter
 valid_projects = "projects_valid_test.csv"
 invalid_projects = "projects_invalid_test.csv"
 mixed_projects = "projects_mixed_test.csv"
+no_such_file_projects = "nonexistantfile.csv"
 repo = ProjectRepository()
 
 
@@ -22,7 +23,7 @@ class TestProjectsImporter(TestCase):
 
     def test_file_not_found(self):
         # Create an importer with a file that doesn't exist
-        no_file_importer = ProjectsImporter("nonexistantfile.csv", repo)
+        no_file_importer = ProjectsImporter(no_such_file_projects, repo)
 
         # Attempting to import the projects if the file doesn't exist shouldn't raise an exception
         no_file_importer.import_projects()
@@ -37,6 +38,16 @@ class TestProjectsImporter(TestCase):
         # None of the invalid projects should be imported
         # ===========================
         self.assertEqual(set(), repo.get_all())
+
+    def test_import_mixed_projects(self):
+        print("running")
+        self.assertEqual(set(), repo.get_all())
+        importer = ProjectsImporter(mixed_projects, repo)
+        importer.import_projects()
+        # Mixed is a concatenation of the invalid and then valid projects
+        # The last 2 are the valid ones
+        # ===========================
+        self.assertEqual(2, len(repo.get_all()))
 
     def test_import_valid_projects(self):
         self.assertEqual(set(), repo.get_all())

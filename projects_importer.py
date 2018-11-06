@@ -20,10 +20,6 @@ class ProjectsImporter:
         except FileNotFoundError as error:
             print("File \"%s\" not found to import projects from" % error.filename)
             projects = []
-        except MalformedCsvError as error:
-            print("Error importing project from row %s: " % error.row)
-            print(error.exception)
-            projects = []
 
         self.projects_repo.put(projects)
 
@@ -32,10 +28,14 @@ class ProjectsImporter:
         with open(self.file_name, mode="r", newline="\n") as f:
             csv_reader = csv.reader(f)
             for row in csv_reader:
-                project = self.__from_csv_line(row)
-                projects.append(project)
+                try:
+                    project = self.__from_csv_line(row)
+                    projects.append(project)
+                except MalformedCsvError as error:
+                    print("Error importing project from row %s: " % error.row)
+                    print(error.exception)
 
-        return projects
+            return projects
 
     @staticmethod
     def __from_csv_line(row):
