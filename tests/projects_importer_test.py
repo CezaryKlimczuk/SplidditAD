@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 
 from project import Project, Person
@@ -22,6 +23,10 @@ class TestProjectsImporter(TestCase):
     def tearDown(self):
         super().tearDown()
         repo.delete_all()
+
+    def test_invalid_projects_file_does_not_exist(self):
+        # We assume this file doesn't exist in test_file_not_found()
+        self.assertFalse(os.path.isfile(no_such_file_projects))
 
     def test_file_not_found(self):
         # Create an importer with a file that doesn't exist
