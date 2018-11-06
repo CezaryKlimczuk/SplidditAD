@@ -8,6 +8,25 @@ class Project:
         for member in members:
             member._project = self
 
+    def __eq__(self, o: object) -> bool:
+        # TODO test
+        if id(self) == id(o):
+            return True
+
+        if not isinstance(o, Project):
+            return False
+
+        if self.name != o.name:
+            return False
+
+        if self.members != o.members:
+            return False
+
+        return True
+
+    def __hash__(self) -> int:
+        return hash(self.name)
+
     @staticmethod
     def __assert_member_names_are_unique(members):
         unique_member_names = set(map(lambda member: member.name, members))
@@ -52,7 +71,7 @@ class Project:
         for member in self.members:
             name_space_count = len(longest_member.name) - len(member.name)
             str_right = ":" + name_space_count * " "
-            details += (indent_left + member.name + str_right + indent_right + str(member.get_total_score())) + "\n"
+            details += (indent_left + member.name + str_right + indent_right + str(member.get_total_score(self))) + "\n"
 
         details += "\n"
 
@@ -66,16 +85,44 @@ class Person:
     def __init__(self, name):
         self.name = name
         self.votes = {}  # Person -> points (int)
-        self._project = None
 
-    def get_total_score(self):
+    def __eq__(self, o: object) -> bool:
+        # TODO test
+        if id(self) == id(o):
+            return True
+
+        if not isinstance(o, Person):
+            return False
+
+        if self.name != o.name:
+            return False
+
+        if len(self.votes) != len(o.votes):
+            return False
+
+        for (self_person, self_vote) in self.votes.items():
+            found = False
+            for (person, vote) in o.votes.items():
+                if self_person.name == person.name:
+                    found = True
+                    if self_vote != vote:
+                        return False
+            if not found:
+                return False
+
+        return True
+
+    def __hash__(self) -> int:
+        return hash(self.name)
+
+    def get_total_score(self, project):
         """
         Calculates and returns the score using the share
 
         :return: (int) The score of the member. Is between 0 (inclusive) and 100 (inclusive)
         """
         denominator = 1
-        for voter in self._project.members:
+        for voter in project.members:
             if voter != self:
                 vote = voter.votes[self]
                 denominator += (100 - vote) / vote

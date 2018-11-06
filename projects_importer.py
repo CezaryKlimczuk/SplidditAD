@@ -17,6 +17,9 @@ class ProjectsImporter:
             for project in projects:
                 print(project)
             print("\n")
+        except FileNotFoundError as error:
+            print("File \"%s\" not found to import projects from" % error.filename)
+            projects = []
         except MalformedCsvError as error:
             print("Error importing project from row %s: " % error.row)
             print(error.exception)
