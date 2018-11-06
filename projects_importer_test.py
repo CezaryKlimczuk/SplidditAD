@@ -5,6 +5,8 @@ from project_repository import ProjectRepository
 from projects_importer import ProjectsImporter
 
 valid_projects = "projects_valid_test.csv"
+invalid_projects = "projects_invalid_test.csv"
+mixed_projects = "projects_mixed_test.csv"
 repo = ProjectRepository()
 
 
@@ -26,6 +28,14 @@ class TestProjectsImporter(TestCase):
         no_file_importer.import_projects()
 
         # It should instead import nothing
+        self.assertEqual(set(), repo.get_all())
+
+    def test_import_invalid_projects(self):
+        self.assertEqual(set(), repo.get_all())
+        importer = ProjectsImporter(invalid_projects, repo)
+        importer.import_projects()
+        # None of the invalid projects should be imported
+        # ===========================
         self.assertEqual(set(), repo.get_all())
 
     def test_import_valid_projects(self):
