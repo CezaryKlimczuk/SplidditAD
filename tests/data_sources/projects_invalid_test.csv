@@ -3,3 +3,5 @@ TOO_SMALL_MEMBER_COUNT,2,Asim,Bogdan,Xiang,Asim,Bogdan,60,Xiang,40,Bogdan,Xiang,
 STRING_MEMBER_COUNT,member_count,Asim,Bogdan,Xiang,Asim,Bogdan,60,Xiang,40,Bogdan,Xiang,35,Asim,65,Xiang,Bogdan,50,Asim,50
 DUPLICATE_MEMBER_NAMES,03,Asim,Asim,Xiang,Asim,Bogdan,60,Xiang,40,Bogdan,Xiang,35,Asim,65,Xiang,Bogdan,50,Asim,50
 VOTES_DONT_SUM_TO_100,03,Asim,Bogdan,Xiang,Asim,Bogdan,60,Xiang,0,Bogdan,Xiang,35,Asim,65,Xiang,Bogdan,50,Asim,50
+NEGATIVE_VOTES,03,Asim,Bogdan,Xiang,Asim,Bogdan,160,Xiang,-60,Bogdan,Xiang,35,Asim,65,Xiang,Bogdan,50,Asim,50
+NEGATIVE_VOTES_2,4,Asim,Bogdan,Xiang,Dave,Asim,Bogdan,60,Xiang,-60,Dave,100,Bogdan,Xiang,35,Asim,64,Dave,1,Xiang,Bogdan,50,Asim,49,Dave,1,Dave,Bogdan,50,Xiang,49,Asim,1

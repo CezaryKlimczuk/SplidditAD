@@ -133,6 +133,9 @@ class Person:
         if vote > self.__remaining_votes:
             raise ValueError("Cannot assign more votes than are available")
 
+        if vote < 0:
+            raise ValueError("Cannot assign negative votes")
+
         original_vote = self.__votes.get(person, None)
         if original_vote is not None:
             print("Updating score for %s" % person.name)
