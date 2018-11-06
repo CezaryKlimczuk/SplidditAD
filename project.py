@@ -84,7 +84,11 @@ class Project:
 class Person:
     def __init__(self, name):
         self.name = name
-        self.votes = {}  # Person -> points (int)
+        self.__votes = {}  # Person -> points (int)
+        self.__remaining_votes = 100
+
+    def get_remaining_votes(self):
+        return self.__remaining_votes
 
     def __eq__(self, o: object) -> bool:
         # TODO test
@@ -97,12 +101,12 @@ class Person:
         if self.name != o.name:
             return False
 
-        if len(self.votes) != len(o.votes):
+        if len(self.__votes) != len(o.__votes):
             return False
 
-        for (self_person, self_vote) in self.votes.items():
+        for (self_person, self_vote) in self.__votes.items():
             found = False
-            for (person, vote) in o.votes.items():
+            for (person, vote) in o.__votes.items():
                 if self_person.name == person.name:
                     found = True
                     if self_vote != vote:
@@ -115,12 +119,44 @@ class Person:
     def __hash__(self) -> int:
         return hash(self.name)
 
+    def assign_votes(self, person, vote):
+        """
+        Assigns votes from this instance to the argument person instance
+
+        :param vote: The number of votes we want to assign to the other person
+        :param person:  The person who we are assigning the votes to :param vote: The votes. Int between 0 (
+        inclusive) and 100 (inclusive)
+
+        :return int: The previous vote that had been assigned to the above user.
+                     If there was no previous result, None is returned
+        """
+        if vote > self.__remaining_votes:
+            raise ValueError("Cannot assign more votes than are available")
+
+        original_vote = self.__votes.get(person, None)
+        if original_vote is not None:
+            print("Updating score for %s" % person.name)
+            self.__remaining_votes += (original_vote - vote)
+        else:
+            self.__remaining_votes -= vote
+
+        self.__votes[person] = vote
+        return original_vote
+
     def get_total_score(self, project):
         """
         Calculates and returns the score using the share
 
+        :exception Raises a ValueError if the member hasn't finished voting
         :return: (int) The score of the member. Is between 0 (inclusive) and 100 (inclusive)
         """
+        if self.__remaining_votes != 0:
+            msg = "Member \"%s\" has't entered all their votes. They have %s points left to assign" % (
+                self.name,
+                self.__remaining_votes
+            )
+            raise ValueError(msg)
+
         denominator = 1
         for voter in project.members:
             if voter != self:
@@ -133,9 +169,9 @@ class Person:
 
     def __str__(self) -> str:
         votes = ""
-        for (index, (member, vote)) in enumerate(self.votes.items()):
+        for (index, (member, vote)) in enumerate(self.__votes.items()):
             votes += member.name + ": " + str(vote)
-            if index != len(self.votes) - 1:
+            if index != len(self.__votes) - 1:
                 votes += ", "
 
         return "Person(name=%s, votes={%s})" % (self.name, votes)
@@ -143,7 +179,7 @@ class Person:
     def __repr__(self) -> str:
         # TODO
         votes = ""
-        for (member, vote) in self.votes.items():
+        for (member, vote) in self.__votes.items():
             votes += member.name + ": " + str(vote)
 
         return "Person(name=%s, votes={%s})" % (self.name, votes)

@@ -40,7 +40,6 @@ class TestProjectsImporter(TestCase):
         self.assertEqual(set(), repo.get_all())
 
     def test_import_mixed_projects(self):
-        print("running")
         self.assertEqual(set(), repo.get_all())
         importer = ProjectsImporter(mixed_projects, repo)
         importer.import_projects()
@@ -67,12 +66,12 @@ class TestProjectsImporter(TestCase):
         xiang = Person("Xiang")
 
         # Votes
-        asim.votes[bogdan] = 60
-        asim.votes[xiang] = 40
-        bogdan.votes[xiang] = 35
-        bogdan.votes[asim] = 65
-        xiang.votes[bogdan] = 50
-        xiang.votes[asim] = 50
+        asim.assign_votes(bogdan, 60)
+        asim.assign_votes(xiang, 40)
+        bogdan.assign_votes(xiang, 35)
+        bogdan.assign_votes(asim, 65)
+        xiang.assign_votes(bogdan, 50)
+        xiang.assign_votes(asim, 50)
 
         name = "C1-ENGS101P"
         C1_ENGS101P = Project(name, [asim, bogdan, xiang])
@@ -90,12 +89,12 @@ class TestProjectsImporter(TestCase):
         chuzi = Person("Chuzi")
 
         # Votes
-        axel.votes[bo] = 50
-        axel.votes[chuzi] = 50
-        bo.votes[chuzi] = 60
-        bo.votes[axel] = 40
-        chuzi.votes[bo] = 65
-        chuzi.votes[axel] = 45
+        axel.assign_votes(bo, 50)
+        axel.assign_votes(chuzi, 50)
+        bo.assign_votes(chuzi, 60)
+        bo.assign_votes(axel, 40)
+        chuzi.assign_votes(bo, 65)
+        chuzi.assign_votes(axel, 35)
 
         name = "ProjectC"
         project_C = Project(name, [axel, bo, chuzi])
