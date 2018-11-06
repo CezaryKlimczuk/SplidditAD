@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from test_helper import create_project
+from tests.test_helper import create_project
 
 project = create_project("project_1", ["a", "b", "c"])
 

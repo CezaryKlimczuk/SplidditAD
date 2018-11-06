@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from project_repository import ProjectRepository
-from test_helper import create_project
+from tests.test_helper import create_project
 
 repo = ProjectRepository()
 project_1 = create_project("project_1", ["a", "b", "c"])

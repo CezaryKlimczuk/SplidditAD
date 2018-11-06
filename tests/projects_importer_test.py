@@ -4,10 +4,12 @@ from project import Project, Person
 from project_repository import ProjectRepository
 from projects_importer import ProjectsImporter
 
-valid_projects = "projects_valid_test.csv"
-invalid_projects = "projects_invalid_test.csv"
-mixed_projects = "projects_mixed_test.csv"
-no_such_file_projects = "nonexistantfile.csv"
+prefix = "tests/data_sources/"
+valid_projects = prefix + "projects_valid_test.csv"
+invalid_projects = prefix + "projects_invalid_test.csv"
+mixed_projects = prefix + "projects_mixed_test.csv"
+no_such_file_projects = prefix + "nonexistantfile.csv"
+
 repo = ProjectRepository()
 
 

@@ -8,5 +8,5 @@ python3 program.py
 
 #### To run all tests:
 ```
-python3 -m unittest discover --pattern=*.py
+export PYTHONPATH="/" & python3 -m unittest discover --pattern=*.py -s tests
 ```
