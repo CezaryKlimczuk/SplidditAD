@@ -2,6 +2,8 @@ import csv
 
 from project import Person, Project
 
+debug = False
+
 
 class ProjectsImporter:
 
@@ -13,12 +15,7 @@ class ProjectsImporter:
     def import_projects(self):
         try:
             projects = self.__read_projects()
-            print("Imported projects: ")
-            for project in projects:
-                print(project)
-            print("\n")
-        except FileNotFoundError as error:
-            print("File \"%s\" not found to import projects from" % error.filename)
+        except FileNotFoundError:
             projects = []
 
         self.projects_repo.put(projects)
@@ -31,9 +28,8 @@ class ProjectsImporter:
                 try:
                     project = self.__from_csv_line(row)
                     projects.append(project)
-                except Exception as exception:
-                    print("Error importing project from row %s: " % row)
-                    print(exception)
+                except Exception:
+                    pass
 
             return projects
 
@@ -77,7 +73,7 @@ class ProjectsImporter:
                                 previous_vote = member.assign_votes(target_member, int(target_member_vote))
                                 if previous_vote is not None:
                                     raise ValueError("Duplicate votes for %s" % member, target_member)
-                                
+
                     if member.get_remaining_votes() != 0:
                         raise ValueError("Did not assign all votes for %s" % member)
 
