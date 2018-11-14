@@ -1,3 +1,6 @@
+MAX_AVAILABLE_VOTES = 100
+
+
 class Project:
     def __init__(self, project_name, members):
         self.name = project_name
@@ -85,7 +88,7 @@ class Person:
     def __init__(self, name):
         self.name = name
         self.__votes = {}  # Person -> points (int)
-        self.__remaining_votes = 100
+        self.__remaining_votes = MAX_AVAILABLE_VOTES
 
     def get_remaining_votes(self):
         return self.__remaining_votes
@@ -125,7 +128,7 @@ class Person:
 
         :param vote: The number of votes we want to assign to the other person
         :param person:  The person who we are assigning the votes to :param vote: The votes. Int between 0 (
-        inclusive) and 100 (inclusive)
+        inclusive) and MAX_AVAILABLE_VOTES (inclusive)
 
         :return int: The previous vote that had been assigned to the above user.
                      If there was no previous result, None is returned
@@ -151,7 +154,7 @@ class Person:
         Calculates and returns the score using the share
 
         :exception Raises a ValueError if the member hasn't finished voting
-        :return: (int) The score of the member. Is between 0 (inclusive) and 100 (inclusive)
+        :return: (int) The score of the member. Is between 0 (inclusive) and MAX_AVAILABLE_VOTES (inclusive)
         """
         if self.__remaining_votes != 0:
             msg = "Member \"%s\" has't entered all their votes. They have %s points left to assign" % (
@@ -164,11 +167,11 @@ class Person:
         for voter in project.members:
             if voter != self:
                 vote = voter.votes[self]
-                denominator += (100 - vote) / vote
+                denominator += (MAX_AVAILABLE_VOTES - vote) / vote
 
         share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
 
-        return round(share * 100)
+        return round(share * MAX_AVAILABLE_VOTES)
 
     def __str__(self) -> str:
         votes = ""

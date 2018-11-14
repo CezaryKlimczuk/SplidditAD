@@ -1,3 +1,6 @@
+from project import MAX_AVAILABLE_VOTES
+
+
 class ProjectVoter():
 
     def __init__(self) -> None:
@@ -11,12 +14,12 @@ class ProjectVoter():
         """
         # The process of assigning votes starts here
         points = []  # A list of the sum of votes given by each member
-        points_assigned_correctly = False  # All values need to be equal to 100, ergo False
+        points_assigned_correctly = False  # All values need to be equal to project.MAX_AVAILABLE_VOTES, ergo False
         while not points_assigned_correctly:
             # Iterating through all members in a project
             for assignor in project.members:
-                print("\nEnter %s's votes, points must add up to 100:\n" % assignor.name)
-                remaining_points = 100  # The number of disposable votes for each member
+                print("\nEnter %s's votes, points must add up to %s:\n" % (assignor.name, MAX_AVAILABLE_VOTES))
+                remaining_points = MAX_AVAILABLE_VOTES  # The number of disposable votes for each member
                 # Iterating through all partners of a member
                 remaining_members_count = len(project.members) - 2
                 # This will be used to ensure that no partner is left with zero points (check WHILE NOT below)
@@ -30,15 +33,15 @@ class ProjectVoter():
                         remaining_members_count -= 1
 
                 points.append(
-                    100 - remaining_points)  # Adding the number of points given by each member (should be 100)
+                    MAX_AVAILABLE_VOTES - remaining_points)  # Adding the number of points given by each member (should be MAX_AVAILABLE_VOTES)
 
-            points_assigned_correctly = True  # Assuming that all values in points are 100
-            # Checking if each member's votes add up to 100.
+            points_assigned_correctly = True  # Assuming that all values in points are MAX_AVAILABLE_VOTES
+            # Checking if each member's votes add up to MAX_AVAILABLE_VOTES.
             # If they don't, any changes are cancelled. Iterate through members again (while loop)
             for x in points:
-                if x != 100:
+                if x != MAX_AVAILABLE_VOTES:
                     points_assigned_correctly = False
-                    print('\nPoints from every member have to add up to 100. Please try again.\n')
+                    print('\nPoints from every member have to add up to %s. Please try again.\n' % MAX_AVAILABLE_VOTES)
                     for any_member in project.members:
                         any_member.votes.clear()
                     points = []
@@ -58,7 +61,7 @@ class ProjectVoter():
         points = input("Enter %s's points for %s:" % (assignor.name, assignee.name))
         # Validate:
         # Must be integer
-        # Last member has exactly points_left assigned to sum up to 100
+        # Last member has exactly points_left assigned to sum up to MAX_AVAILABLE_VOTES
         # If not last member, desired assigned point count is within range
         while (not points.isdigit()) \
                 or remaining_members_count == 0 and int(points) != points_left \
