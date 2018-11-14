@@ -12,7 +12,6 @@ class Project:
             member._project = self
 
     def __eq__(self, o: object) -> bool:
-        # TODO test
         if id(self) == id(o):
             return True
 
@@ -82,5 +81,3 @@ class Project:
 
     def __str__(self) -> str:
         return "Project(name=%s, members=%s)" % (self.name, str(self.members))
-
-
