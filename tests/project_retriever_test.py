@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-from project import Project, Person
+from project import Project
+from person import Person
 from project_repository import ProjectRepository
 from project_retriever import ProjectRetriever
 from tests.test_helper import mock_inputs

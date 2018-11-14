@@ -1,4 +1,5 @@
-from project import Project, Person
+from project import Project
+from person import Person
 
 
 class ProjectCreator:

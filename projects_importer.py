@@ -1,6 +1,7 @@
 import csv
 
-from project import Person, Project
+from project import Project
+from person import Person
 
 debug = False
 

@@ -1,7 +1,8 @@
 import os
 from unittest import TestCase
 
-from project import Project, Person
+from project import Project
+from person import Person
 from project_repository import ProjectRepository
 from projects_importer import ProjectsImporter
 
