@@ -1,5 +1,3 @@
-import builtins
-from contextlib import contextmanager
 from unittest import TestCase
 
 import menu
