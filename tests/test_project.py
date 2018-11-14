@@ -55,4 +55,4 @@ class TestProject(TestCase):
         # Same project but with members order reversed
         members = list(reversed(PROJECT_MEMBER_NAMES))
         project_reversed_members = test_helper.create_project(PROJECT_NAME, members)
-        self.assertEqual(project, project_reversed_members)  # TODO FIX ME!!!! Use a set
+        self.assertEqual(project, project_reversed_members)
