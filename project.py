@@ -7,7 +7,7 @@ class Project:
 
         self.__assert_member_names_are_unique(members)
         self.__assert_enough_members(members)
-        self.members = members
+        self.members = set(members)
         for member in members:
             member._project = self
 
