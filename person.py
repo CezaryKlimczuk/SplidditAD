@@ -50,17 +50,23 @@ class Person:
         :return int: The previous vote that had been assigned to the above user.
                      If there was no previous result, None is returned
         """
-        if vote > self.__remaining_votes:
-            raise ValueError("Cannot assign more votes than are available")
-
         if vote < 0:
             raise ValueError("Cannot assign negative votes")
 
         original_vote = self.__votes.get(person, None)
         if original_vote is not None:
             print("Updating score for %s" % person.name)
+            if vote - original_vote > self.__remaining_votes:
+                raise ValueError(
+                    "%s: You've currently assigned %s votes for member %s and have %s points remaining to allocate, "
+                    "but if you assign %s votes to them. you will not have enough points" % (
+                        self.name, original_vote, person.name, self.__remaining_votes, vote))
+
             self.__remaining_votes += (original_vote - vote)
         else:
+            # Check now whether we have enough votes
+            if vote > self.__remaining_votes:
+                raise ValueError("Cannot assign more votes than are available")
             self.__remaining_votes -= vote
 
         self.__votes[person] = vote
@@ -83,7 +89,7 @@ class Person:
         denominator = 1
         for voter in project.members:
             if voter != self:
-                vote = voter.votes[self]
+                vote = voter.__votes[self]
                 denominator += (MAX_AVAILABLE_VOTES - vote) / vote
 
         share = round(1 / denominator, 2)  # Rounding member's share to 2 decimal places
