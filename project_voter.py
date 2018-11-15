@@ -1,7 +1,7 @@
 from project import MAX_AVAILABLE_VOTES
 
 
-class ProjectVoter():
+class ProjectVoter:
 
     def __init__(self) -> None:
         super().__init__()
@@ -32,8 +32,8 @@ class ProjectVoter():
                         remaining_points -= points_input  # Decreasing the number of disposable votes left
                         remaining_members_count -= 1
 
-                points.append(
-                    MAX_AVAILABLE_VOTES - remaining_points)  # Adding the number of points given by each member (should be MAX_AVAILABLE_VOTES)
+                # Adding the number of points given by each member (should be MAX_AVAILABLE_VOTES)
+                points.append(MAX_AVAILABLE_VOTES - remaining_points)
 
             points_assigned_correctly = True  # Assuming that all values in points are MAX_AVAILABLE_VOTES
             # Checking if each member's votes add up to MAX_AVAILABLE_VOTES.
@@ -56,7 +56,9 @@ class ProjectVoter():
         :param assignee: (Person) The project member who is being given points by the assignor
         :param points_left: (int) The number of points the assignor has remaining to assign
         :param remaining_members_count: The number of members the assignor still has to allocate points to afterwards
-        :return: (int) The number of points the assignor allocated to the assignee. Between 0 (inclusive) and points_left (inclusive)
+        
+        :return: (int) The number of points the assignor allocated to the assignee.
+                Between 0 (inclusive) and points_left (inclusive)
         """
         points = input("Enter %s's points for %s:" % (assignor.name, assignee.name))
         # Validate:

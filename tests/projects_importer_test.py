@@ -82,7 +82,7 @@ class TestProjectsImporter(TestCase):
         xiang.assign_votes(asim, 50)
 
         name = "C1-ENGS101P"
-        C1_ENGS101P = Project(name, [asim, bogdan, xiang])
+        c1_engs101p = Project(name, [asim, bogdan, xiang])
 
         # =========================
         # ProjectC,3,
@@ -105,8 +105,8 @@ class TestProjectsImporter(TestCase):
         chuzi.assign_votes(axel, 35)
 
         name = "ProjectC"
-        project_C = Project(name, [axel, bo, chuzi])
+        project_c = Project(name, [axel, bo, chuzi])
 
         # ===============================
 
-        self.assertEqual({C1_ENGS101P, project_C}, repo.get_all())
+        self.assertEqual({c1_engs101p, project_c}, repo.get_all())

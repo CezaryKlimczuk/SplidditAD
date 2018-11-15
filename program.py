@@ -64,8 +64,8 @@ def on_print_about_requested():
     """
     Prints information about the program
     """
-    about = "This is a Fair Grade Allocator. The purpose of the application is to help teams allocate the credit for a " \
-            "project so that all parties are satisfied with the outcome. The idea is inspired by the work of " \
+    about = "This is a Fair Grade Allocator. The purpose of the application is to help teams allocate the credit for " \
+            "a project so that all parties are satisfied with the outcome. The idea is inspired by the work of " \
             "Ariel Procaccia, a professor, and Jonathan Goldman, a student, who were both at Carnegie Mellon " \
             "University in the USA (Jonathan now works for Facebook). They went on to produce a web application " \
             "called Spliddit which offers provably fair solutions for a variety of division problems including " \
