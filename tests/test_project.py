@@ -17,7 +17,7 @@ class TestProject(TestCase):
         self.assertEqual("aa", project.get_longest_member().name)
 
     def test_show_details(self):
-        # self.fail()
+        # TODO
         pass
 
     def test_raises_exception_for_duplicate_members(self):
