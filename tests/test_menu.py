@@ -1,10 +1,16 @@
 from unittest import TestCase
+from unittest.mock import MagicMock
 
 import menu
 from tests.test_helper import mock_inputs
 
 
 class TestMenu(TestCase):
+
+    def test_print_main_menu_calls_print(self):
+        menu.print = MagicMock()
+        menu.print_main_menu()
+        self.assertTrue(menu.print.called)
 
     def test_get_selected_menu_for_default_valid_input(self):
         self.assert_returns_menu_item_for_input("a", menu.about)
