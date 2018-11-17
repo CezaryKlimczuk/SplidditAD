@@ -10,12 +10,10 @@ class ProjectCreator:
 
     def create_new_project(self):
         """
-        Queries the user to create a new project. The name might be the same as a previous project.
-        The project is added to the repository
+        Queries the user to create a new project, and adds the project to the repository
 
         :return: a new Project
         """
-        # TODO project name must be unique. Update documentation when fixed
         project_name = self.__get_new_project_name()
         num_of_members = self.__get_new_project_member_count()
         print('\n')
@@ -25,15 +23,22 @@ class ProjectCreator:
         self.repo.put(project)
         return project
 
-    @staticmethod
-    def __get_new_project_name():
+    def __get_new_project_name(self):
         """
         Queries the user for a new project name.
 
-        :return:
-            (str) the project name. Can be empty or the same as a previous project name
+        :return: (str) the project name. Can be empty and will always have whitespace trimmed.
         """
-        return str(input("Enter the project name: "))
+        name = str(input("Enter the project name: ")).strip()
+
+        # Make sure a project with such name doesn't exist
+        while self.repo.find_by_name(name) is not None:
+            print("A project with this name already exists, try again.")
+            name = self.__get_new_project_name()
+
+        # TODO make sure there are no special characters
+
+        return name
 
     def __get_new_project_member_count(self):
         """
