@@ -4,7 +4,7 @@ from unittest import TestCase
 from project import Project
 from person import Person
 from project_repository import ProjectRepository
-from projects_importer import ProjectsImporter
+from csv.projects_importer import ProjectsImporter
 
 prefix = "tests/data_sources/"
 valid_projects = prefix + "projects_valid_test.csv"

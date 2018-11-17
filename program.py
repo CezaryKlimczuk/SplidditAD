@@ -3,8 +3,8 @@ from project_creator import ProjectCreator
 from project_repository import ProjectRepository
 from project_retriever import ProjectRetriever
 from project_voter import ProjectVoter
-from projects_exporter import ProjectsExporter
-from projects_importer import ProjectsImporter
+from csv.projects_exporter import ProjectsExporter
+from csv.projects_importer import ProjectsImporter
 
 repo = ProjectRepository()
 creator = ProjectCreator(repo)

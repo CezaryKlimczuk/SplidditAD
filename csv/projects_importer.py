@@ -1,4 +1,5 @@
-import csv
+import _csv
+# attempting to import csv imports the project module, rather than python module
 
 from project import Project
 from person import Person
@@ -24,7 +25,7 @@ class ProjectsImporter:
     def __read_projects(self):
         projects = []
         with open(self.file_name, mode="r", newline="\n") as f:
-            csv_reader = csv.reader(f)
+            csv_reader = _csv.reader(f)
             for row in csv_reader:
                 try:
                     project = self.__from_csv_line(row)
