@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from person import Person
-from project import MAX_AVAILABLE_VOTES, Project
+from person.person import Person
+from project.project import MAX_AVAILABLE_VOTES, Project
 
 
 class TestPerson(TestCase):

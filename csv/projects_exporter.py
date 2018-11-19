@@ -1,4 +1,4 @@
-import csv
+import _csv
 
 
 class ProjectsExporter:
@@ -14,7 +14,7 @@ class ProjectsExporter:
             lines.append(self.__to_csv_line(project))
 
         with self.__get_file() as f:
-            csv_writer = csv.writer(f)
+            csv_writer = _csv.writer(f)
             csv_writer.writerows(lines)
 
     @staticmethod

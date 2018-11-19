@@ -1,9 +1,9 @@
 import os
 from unittest import TestCase
 
-from project import Project
-from person import Person
-from project_repository import ProjectRepository
+from project.project import Project
+from person.person import Person
+from project.project_repository import ProjectRepository
 from csv.projects_importer import ProjectsImporter
 
 prefix = "tests/data_sources/"

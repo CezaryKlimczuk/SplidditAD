@@ -1,8 +1,7 @@
 import _csv
-# attempting to import csv imports the project module, rather than python module
 
-from project import Project
-from person import Person
+from project.project import Project
+from person.person import Person
 
 debug = False
 

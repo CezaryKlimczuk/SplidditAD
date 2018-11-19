@@ -1,8 +1,8 @@
-import menu
-from project_creator import ProjectCreator
-from project_repository import ProjectRepository
-from project_retriever import ProjectRetriever
-from project_voter import ProjectVoter
+from menu import menu
+from project.project_creator import ProjectCreator
+from project.project_repository import ProjectRepository
+from project.project_retriever import ProjectRetriever
+from project.project_voter import ProjectVoter
 from csv.projects_exporter import ProjectsExporter
 from csv.projects_importer import ProjectsImporter
 

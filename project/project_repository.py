@@ -1,4 +1,4 @@
-from project import Project
+from project.project import Project
 
 
 class ProjectRepository:

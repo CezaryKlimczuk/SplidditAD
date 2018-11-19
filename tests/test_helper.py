@@ -2,8 +2,8 @@ import builtins
 from contextlib import contextmanager
 from unittest.mock import Mock
 
-from project import Project
-from person import Person
+from project.project import Project
+from person.person import Person
 
 
 def create_project(project_name, member_names):

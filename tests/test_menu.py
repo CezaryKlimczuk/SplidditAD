@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
-import menu
+from menu import menu
 from tests.test_helper import mock_inputs
 
 
@@ -10,6 +10,8 @@ class TestMenu(TestCase):
     def test_print_main_menu_calls_print(self):
         menu.print = MagicMock()
         menu.print_main_menu()
+        # print is a built in function so unresolved reference can be safely ignored
+        # noinspection PyUnresolvedReferences
         self.assertTrue(menu.print.called)
 
     def test_get_selected_menu_for_default_valid_input(self):

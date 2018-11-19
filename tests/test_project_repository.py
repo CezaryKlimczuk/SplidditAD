@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from project_repository import ProjectRepository
+from project.project_repository import ProjectRepository
 from tests.test_helper import create_project
 
 repo = ProjectRepository()

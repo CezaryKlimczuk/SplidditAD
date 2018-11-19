@@ -1,4 +1,4 @@
-from project import MAX_AVAILABLE_VOTES
+from project.project import MAX_AVAILABLE_VOTES
 
 
 class ProjectVoter:
