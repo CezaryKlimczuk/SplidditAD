@@ -161,3 +161,4 @@ venv.bak/
 /.idea/Spliddit.iml
 /.idea/misc.xml
 /csv/projects.csv
+/tests/data_sources/projects_exported_test.csv

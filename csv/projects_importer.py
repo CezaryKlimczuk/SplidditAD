@@ -17,6 +17,7 @@ class ProjectsImporter:
         try:
             projects = self.__read_projects()
         except FileNotFoundError:
+            print("File %s does not exist to import projects from" % self.file_name)
             projects = []
 
         self.projects_repo.put(projects)
@@ -41,7 +42,8 @@ class ProjectsImporter:
 
         # name + member_count + member names + member votes
         expected_row_size = 1 + 1 + member_count + member_count + member_count * (member_count - 1) * 2
-        assert expected_row_size == len(row)
+        if expected_row_size != len(row):
+            raise ValueError("Incorrect size. Expected=%s, actual=%s for \"%s\"" % (expected_row_size, len(row), row))
 
         # TODO use a dict name -> member
         members = []

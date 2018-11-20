@@ -12,7 +12,10 @@ class ProjectsExporter:
     def export_projects(self):
         lines = []
         for project in self.projects_repo.get_all():
-            lines.append(self.__to_csv_line(project))
+            try:
+                lines.append(self.__to_csv_line(project))
+            except ValueError as error:
+                print(error)
 
         with self.__get_file() as f:
             csv_writer = _csv.writer(f)
@@ -20,9 +23,14 @@ class ProjectsExporter:
 
     @staticmethod
     def __to_csv_line(project):
+        for member in project.members:
+            if member.get_remaining_votes() != 0:
+                # Cannot export projects where the user hasn't filled the votes
+                raise ValueError("Cannot export project \"%s\" because the votes haven't been entered" % project.name)
+
         elements = [project.name, project.get_member_count()]
 
-        # Appending member count + member names
+        # Appending member names
         for member in project.members:
             elements.append(member.name)
 
