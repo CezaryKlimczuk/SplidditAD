@@ -7,6 +7,10 @@ class Person:
         self.__votes = {}  # Person -> points (int)
         self.__remaining_votes = MAX_AVAILABLE_VOTES
 
+    @property
+    def votes(self):
+        return self.__votes
+
     def get_remaining_votes(self):
         return self.__remaining_votes
 

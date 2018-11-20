@@ -1,4 +1,5 @@
 import _csv
+import os
 
 
 class ProjectsExporter:
@@ -35,4 +36,8 @@ class ProjectsExporter:
         return elements
 
     def __get_file(self):
-        return open(self.file_name, mode="w", newline="\n")
+        if not os.path.exists(self.file_name):
+            # when calling open() the "+" mode will create the file if it does not exist
+            print("File \"%s\" does not exist to export projects. Creating file." % self.file_name)
+
+        return open(self.file_name, mode='w+')

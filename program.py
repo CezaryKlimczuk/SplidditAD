@@ -10,7 +10,7 @@ repo = ProjectRepository()
 creator = ProjectCreator(repo)
 retriever = ProjectRetriever(repo)
 voter = ProjectVoter()
-projects_file = "projects.csv"
+projects_file = "csv/projects.csv"
 exporter = ProjectsExporter(projects_file, repo)
 importer = ProjectsImporter(projects_file, repo)
 
