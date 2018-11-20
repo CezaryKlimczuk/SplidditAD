@@ -17,8 +17,8 @@ class ProjectsExporter:
         """
         Create a new ProjectsExporter to export projects to a CSV file
 
-        :param file_name:
-        :param projects_repo:
+        :param file_name: The file name (with the path) of the file that it will export to.
+        :param projects_repo: The repository that will be used to determine what needs to be exported
         """
         super().__init__()
         self.file_name = file_name
