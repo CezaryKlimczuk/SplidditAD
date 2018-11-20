@@ -20,7 +20,7 @@ def main():
     Most important part of the program. Responsible for handling menu items.
     Once this method exits, the program is no longer running.
 
-    on_open() is always called first
+    on_start() is always called first
 
     on_print_about_requested()
     on_create_project_requested()
@@ -30,7 +30,7 @@ def main():
 
     on_quit() is always called just before the program terminates from user selecting quit menu item
     """
-    on_open()
+    on_start()
     selected_option = None
     while selected_option != menu.quit_program:
         menu.print_main_menu()
@@ -51,7 +51,7 @@ def main():
     on_quit()
 
 
-def on_open():
+def on_start():
     """
     Called whenever the program is started
 
