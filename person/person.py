@@ -109,7 +109,6 @@ class Person:
         return "Person(name=%s, votes={%s})" % (self.name, votes)
 
     def __repr__(self) -> str:
-        # TODO
         votes = ""
         for (member, vote) in self.__votes.items():
             votes += member.name + ": " + str(vote)
