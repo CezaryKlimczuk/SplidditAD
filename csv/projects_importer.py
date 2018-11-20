@@ -45,33 +45,30 @@ class ProjectsImporter:
         if expected_row_size != len(row):
             raise ValueError("Incorrect size. Expected=%s, actual=%s for \"%s\"" % (expected_row_size, len(row), row))
 
-        # TODO use a dict name -> member
-        members = []
+        members = {}  # member name -> member
         for member_index in range(member_count):
             member_name = row[2 + member_index]
             member = Person(member_name)
-            members.append(member)
-
-        member_names = set(map(lambda m: m.name, members))
+            members[member_name] = member
 
         for member_index in range(member_count):
             from_index = 2 + member_count + member_index * (1 + (member_count - 1) * 2)
             to_index = from_index + (1 + (member_count - 1) * 2)
             vote_section = row[from_index:to_index]
             voter_name = vote_section[0]
-            if voter_name not in member_names:
+            if voter_name not in members:
                 raise ValueError("Voter %s not in the members list" % voter_name)
 
-            for member in members:
+            for member in members.values():
                 if member.name == voter_name:
                     for target_member_name_index in range(0, (member_count - 1) * 2, 2):
                         target_member_name = vote_section[1 + target_member_name_index]
-                        if target_member_name not in member_names:
+                        if target_member_name not in members:
                             raise ValueError("Target member %s isn't in the members list" % target_member_name)
 
                         target_member_vote = vote_section[1 + target_member_name_index + 1]
 
-                        for target_member in members:
+                        for target_member in members.values():
                             if target_member.name == target_member_name:
                                 previous_vote = member.assign_votes(target_member, int(target_member_vote))
                                 if previous_vote is not None:
@@ -80,5 +77,5 @@ class ProjectsImporter:
                     if member.get_remaining_votes() != 0:
                         raise ValueError("Did not assign all votes for %s" % member)
 
-        project = Project(project_name, members)
+        project = Project(project_name, members.values())
         return project
