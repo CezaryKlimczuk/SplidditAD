@@ -68,3 +68,51 @@ class TestPerson(TestCase):
         self.assertEqual(23, xiang.get_total_score(project))
         self.assertEqual(38, bogdan.get_total_score(project))
         self.assertEqual(39, asim.get_total_score(project))
+
+    def test_eq_without_votes(self):
+        person = Person("name")
+
+        # Same object reference
+        self.assertEqual(person, person)
+
+        # Same names
+        same_name = Person("name")
+        self.assertEqual(person, same_name)
+
+        # Different names
+        diff_name = Person("name2")
+        self.assertNotEqual(person, diff_name)
+
+    def test_eq_with_assigned_votes_identical(self):
+        # Assign votes to foo
+        foo = Person("foo")
+        bar = Person("bar")
+        baz = Person("baz")
+        foo.assign_votes(bar, MAX_AVAILABLE_VOTES)
+        foo.assign_votes(baz, 0)
+
+        # Assign the same votes to a copy of foo
+        foo_copy = Person("foo")
+        bar_copy = Person("bar")
+        baz_copy = Person("baz")
+        foo_copy.assign_votes(bar_copy, MAX_AVAILABLE_VOTES)
+        foo_copy.assign_votes(baz_copy, 0)
+
+        self.assertEqual(foo, foo_copy)
+
+    def test_eq_with_assigned_votes_different_names(self):
+        # Assign votes to foo
+        foo = Person("foo")
+        bar = Person("bar")
+        baz = Person("baz")
+        foo.assign_votes(bar, MAX_AVAILABLE_VOTES)
+        foo.assign_votes(baz, 0)
+
+        # Assign the same votes to a copy of foo
+        foo_copy = Person("foo")
+        bar_derivative = Person("bar:1")
+        baz_derivative = Person("baz:1")
+        foo_copy.assign_votes(bar_derivative, MAX_AVAILABLE_VOTES)
+        foo_copy.assign_votes(baz_derivative, 0)
+
+        self.assertNotEqual(foo, foo_copy)

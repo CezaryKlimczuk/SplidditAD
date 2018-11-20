@@ -15,7 +15,6 @@ class Person:
         return self.__remaining_votes
 
     def __eq__(self, o: object) -> bool:
-        # TODO test
         if id(self) == id(o):
             return True
 
