@@ -8,9 +8,18 @@ class ProjectsExporter:
     Ideally, the ProjectsRepo would be in control of persisting its state to io, however project requirements dictate
     that projects should be exported/imported at the start/exit of the program, rather than upon creating a new Project
     If the provided file does not exist, it creates it. If the files does exist, it is overwritten.
+
+    The CSV file does not have a header line.
+    The exact format is specified in Appendix 1 of the brief
     """
 
     def __init__(self, file_name, projects_repo) -> None:
+        """
+        Create a new ProjectsExporter to export projects to a CSV file
+
+        :param file_name:
+        :param projects_repo:
+        """
         super().__init__()
         self.file_name = file_name
         self.projects_repo = projects_repo
