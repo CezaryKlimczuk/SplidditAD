@@ -52,6 +52,27 @@ class TestProjectsExporter(TestCase):
         actual = repo.get_all()
         self.assertEqual(expected, actual)
 
+    def test_export_incomplete_projects(self):
+        project_1 = self.create_project("project_1", 3)  # Create a project with 3 members
+        project_2 = self.create_project("project_2", 5)  # Create a project with 5 members
+
+        # incomplete_project is a project where the user hasn't entered the votes.
+        # Exporting/importing a project with incomplete votes isn't supported,
+        # because we only export/import "valid/completed" projects
+        incomplete_project = test_helper.create_project("incomplete_project", ["a", "b", "c"])
+        repo.put(incomplete_project)
+
+        # Make sure all valid/invalid projects are in the repo
+        self.assertEqual({project_1, project_2, incomplete_project}, repo.get_all())
+
+        exporter.export_projects()
+        repo.delete_all()
+        importer.import_projects()
+
+        expected = {project_1, project_2}
+        actual = repo.get_all()
+        self.assertEqual(expected, actual)
+
     @staticmethod
     def create_project(project_name, member_count):
         """
