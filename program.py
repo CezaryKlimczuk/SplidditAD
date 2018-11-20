@@ -90,10 +90,6 @@ def on_enter_votes_requested():
     print('There are %s team members.' % project.get_member_count())
     voter.assign_points_from_user(project)
 
-    # Masz tutaj wyniki gdybyś chciał sprawdzić jak to wszystko działa. Enjoy ^^
-    for member in project.members:
-        print('%s - %s' % (member.name, member.share))
-
 
 def on_show_project_requested():
     """
