@@ -7,7 +7,7 @@ class Project:
 
         self.__assert_member_names_are_unique(members)
         self.__assert_enough_members(members)
-        self.members = set(members)
+        self.members = list(members)
         for member in members:
             member._project = self
 
@@ -21,7 +21,10 @@ class Project:
         if self.name != o.name:
             return False
 
-        if self.members != o.members:
+        # we don't care about the order of the members, but we do need them to be ordered when testing. This is because
+        # when assigning votes we need to know the order in which the program will ask the user to assign votes to
+        # members in
+        if set(self.members) != set(o.members):
             return False
 
         return True
