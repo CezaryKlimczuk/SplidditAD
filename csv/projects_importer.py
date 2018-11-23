@@ -9,20 +9,33 @@ debug = False
 class ProjectsImporter:
 
     def __init__(self, file_name, projects_repo) -> None:
+        """
+
+        :param file_name: The name of the file, relative to the root directory of the program, from which it will
+        parse the projects and add them into the projects_repo
+
+         :param projects_repo: The repository to which the projects will be added to
+        """
         super().__init__()
         self.__file_name = file_name
         self.__projects_repo = projects_repo
 
     def import_projects(self):
+        print("Importing projects from %s" % self.__file_name)
         try:
             projects = self.__read_projects()
+            self.__projects_repo.put(projects)
+            print("Imported %s projects" % len(projects))
         except FileNotFoundError:
             print("File %s does not exist to import projects from" % self.__file_name)
-            projects = []
-
-        self.__projects_repo.put(projects)
 
     def __read_projects(self):
+        """
+        Opens the file and parses it to return the stored projects. Any parsing errors are printed to the console.
+        If the file does not exist, a FileNotFoundError is raised.
+
+        :return: a list of valid projects imported from the file
+        """
         projects = []
         with open(self.__file_name, mode="r", newline="\n") as f:
             csv_reader = _csv.reader(f)
@@ -30,20 +43,28 @@ class ProjectsImporter:
                 try:
                     project = self.__from_csv_line(row)
                     projects.append(project)
-                except Exception:
-                    pass
+                except Exception as error:
+                    print("Problem parsing \"%s\": %s" % (row, error))
 
             return projects
 
     @staticmethod
     def __from_csv_line(row):
+        """
+        Parses a single row to a Project, or raises an error if there is a problem parsing the row or the project is
+        invalid
+
+        :param row: A list of elements from a CSV file, as defined in the project brief
+        :return: a valid Project if successfully parsed
+        :raises an Exception when there is a problem parsing the row or the project with is invalid
+        """
         project_name = row[0]
         member_count = int(row[1])
 
         # name + member_count + member names + member votes
         expected_row_size = 1 + 1 + member_count + member_count + member_count * (member_count - 1) * 2
         if expected_row_size != len(row):
-            raise ValueError("Incorrect size. Expected=%s, actual=%s for \"%s\"" % (expected_row_size, len(row), row))
+            raise ValueError("Incorrect size. Expected=%s, actual=%s" % (expected_row_size, len(row)))
 
         members = {}  # member name -> member
         for member_index in range(member_count):
