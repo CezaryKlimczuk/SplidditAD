@@ -5,8 +5,14 @@ from person.person import Person
 class ProjectCreator:
 
     def __init__(self, repo) -> None:
+        """
+        Create a new ProjectCreator, which is responsible for Querying the user to create a new, valid project.
+        The project is added to  the repository by the ProjectCreator
+
+        :param repo: The ProjectRepository that will be used to add the project to
+        """
         super().__init__()
-        self.repo = repo
+        self.__repo = repo
 
     def create_new_project(self):
         """
@@ -20,7 +26,7 @@ class ProjectCreator:
         team_members = self.__get_new_project_member_names(num_of_members)
         print('\n')
         project = Project(project_name, team_members)
-        self.repo.put(project)
+        self.__repo.put(project)
         return project
 
     def __get_new_project_name(self):
@@ -32,7 +38,7 @@ class ProjectCreator:
         name = str(input("Enter the project name: ")).strip()
 
         # Make sure a project with such name doesn't exist
-        while self.repo.find_by_name(name) is not None:
+        while self.__repo.find_by_name(name) is not None:
             print("A project with this name already exists, try again.")
             name = self.__get_new_project_name()
 
@@ -81,18 +87,24 @@ class ProjectCreator:
     @staticmethod
     def __get_project_member(member_index, current_team_members):
         """
-        Queries the user for a member name until it is unique and returns a new Person
+        Queries the user for a member name until it is unique and returns a new Person.
+        Tha name is trimmed of whitespace.
 
         :param member_index: (int) a non-negative integer  indicating the position in current_team_members that
                the member represents
         :param current_team_members: a list of team members entered so far
         :return: a Person which has a unique name not currently present in current_team_members
         """
-        member_name = str(input("     Enter the name of team member %s: " % (member_index + 1)))
-        # Checking if the same member is not entered twice
-        while member_name in [member.name for member in current_team_members]:
-            member_name = str(
-                input(
-                    "     %s already in the team. Enter the name of team member %s: " % (
-                        member_name, member_index + 1)))
-        return Person(member_name)
+        while True:
+            member_name = str(input("\tEnter the name of team member %s: " % (member_index + 1))).strip()
+
+            # Checking if the same member is not entered twice
+            if member_name in [member.name for member in current_team_members]:
+                print("\t%s is already in the team." % member_name)
+                continue
+
+            try:
+                person = Person(member_name)
+                return person
+            except ValueError as error:
+                print(error)
