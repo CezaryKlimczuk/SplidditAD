@@ -10,21 +10,21 @@ class ProjectsImporter:
 
     def __init__(self, file_name, projects_repo) -> None:
         super().__init__()
-        self.file_name = file_name
-        self.projects_repo = projects_repo
+        self.__file_name = file_name
+        self.__projects_repo = projects_repo
 
     def import_projects(self):
         try:
             projects = self.__read_projects()
         except FileNotFoundError:
-            print("File %s does not exist to import projects from" % self.file_name)
+            print("File %s does not exist to import projects from" % self.__file_name)
             projects = []
 
-        self.projects_repo.put(projects)
+        self.__projects_repo.put(projects)
 
     def __read_projects(self):
         projects = []
-        with open(self.file_name, mode="r", newline="\n") as f:
+        with open(self.__file_name, mode="r", newline="\n") as f:
             csv_reader = _csv.reader(f)
             for row in csv_reader:
                 try:
