@@ -95,7 +95,7 @@ class ProjectsImporter:
                                 if previous_vote is not None:
                                     raise ValueError("Duplicate votes for %s" % member, target_member)
 
-                    if member.get_remaining_votes() != 0:
+                    if member.remaining_votes != 0:
                         raise ValueError("Did not assign all votes for %s" % member)
 
         project = Project(project_name, members.values())

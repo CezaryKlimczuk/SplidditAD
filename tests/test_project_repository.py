@@ -4,8 +4,8 @@ from project.project_repository import ProjectRepository
 from tests.test_helper import create_project
 
 repo = ProjectRepository()
-project_1 = create_project("project_1", ["a", "b", "c"])
-project_2 = create_project("project_2", ["d", "e", "f"])
+project_1 = create_project("project_1", ["aa", "bb", "cc"])
+project_2 = create_project("project_2", ["dd", "ee", "ff"])
 
 
 class TestProjectRepository(TestCase):
@@ -44,7 +44,7 @@ class TestProjectRepository(TestCase):
         self.assert_repo_eq([project_1])
 
         # Check that if we attempt to put a project with the same name then it replaces the project with that name
-        project_with_same_name = create_project(project_1.name, ["d", "e", "f"])
+        project_with_same_name = create_project(project_1.name, ["dd", "ee", "ff"])
         repo.put(project_with_same_name)
         self.assert_repo_eq([project_with_same_name])
 

@@ -17,22 +17,22 @@ class TestPerson(TestCase):
 
     def test_get_remaining_votes(self):
         # No votes assigned, has MAX_AVAILABLE_VOTES still
-        self.assertEqual(MAX_AVAILABLE_VOTES, self.person.get_remaining_votes())
+        self.assertEqual(MAX_AVAILABLE_VOTES, self.person.remaining_votes)
 
     def test_assign_updates_remaining_votes(self):
         # Assign 50 votes and make sure 50 goes away
         self.person.assign_votes(self.target, 50)
-        self.assertEqual(MAX_AVAILABLE_VOTES - 50, self.person.get_remaining_votes())
+        self.assertEqual(MAX_AVAILABLE_VOTES - 50, self.person.remaining_votes)
 
     def test_assign_again_updates_remaining_votes(self):
         # Updating the assigned votes from 50 to 100 should only take away an additional 50 points
         self.person.assign_votes(self.target, 100)
-        self.assertEqual(MAX_AVAILABLE_VOTES - 100, self.person.get_remaining_votes())
+        self.assertEqual(MAX_AVAILABLE_VOTES - 100, self.person.remaining_votes)
 
     def test_assign_max_points_consumes_all_points(self):
         # Assign MAX_AVAILABLE_VOTES to the same person
         self.person.assign_votes(self.target, MAX_AVAILABLE_VOTES)
-        self.assertEqual(0, self.person.get_remaining_votes())
+        self.assertEqual(0, self.person.remaining_votes)
 
     def test_assign_more_votes_than_available_raises_exception(self):
         # If we assign MAX_AVAILABLE_VOTES + 1, it raises an exception
@@ -42,7 +42,7 @@ class TestPerson(TestCase):
     def test_assign_no_points_correctly_removes_votes(self):
         # If we assign 0 votes, it returns back to MAX_AVAILABLE_VOTES
         self.person.assign_votes(self.target, 0)
-        self.assertEqual(MAX_AVAILABLE_VOTES, self.person.get_remaining_votes())
+        self.assertEqual(MAX_AVAILABLE_VOTES, self.person.remaining_votes)
 
     def test_assign_negative_points_throws_exception(self):
         with self.assertRaises(ValueError):
@@ -116,3 +116,15 @@ class TestPerson(TestCase):
         foo_copy.assign_votes(baz_derivative, 0)
 
         self.assertNotEqual(foo, foo_copy)
+
+    def test_short_name_raises_exception(self):
+        with self.assertRaises(ValueError):
+            Person("a")
+
+    def test_whitespace_short_name_raises_exception(self):
+        with self.assertRaises(ValueError):
+            Person(" a ")
+
+    def test_whitespaced_name_is_trimmed(self):
+        person = Person(" aa  ")
+        self.assertNotEqual("aa", person)

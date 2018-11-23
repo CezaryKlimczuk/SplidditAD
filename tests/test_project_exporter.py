@@ -59,7 +59,7 @@ class TestProjectsExporter(TestCase):
         # incomplete_project is a project where the user hasn't entered the votes.
         # Exporting/importing a project with incomplete votes isn't supported,
         # because we only export/import "valid/completed" projects
-        incomplete_project = test_helper.create_project("incomplete_project", ["a", "b", "c"])
+        incomplete_project = test_helper.create_project("incomplete_project", ["aa", "bb", "cc"])
         repo.put(incomplete_project)
 
         # Make sure all valid/invalid projects are in the repo
@@ -95,7 +95,7 @@ class TestProjectsExporter(TestCase):
         for assignor in project.members:
             for assignee in project.members:
                 if assignor is not assignee:
-                    assignor.assign_votes(assignee, assignor.get_remaining_votes())
+                    assignor.assign_votes(assignee, assignor.remaining_votes)
 
         repo.put(project)
         return project

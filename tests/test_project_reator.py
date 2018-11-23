@@ -38,7 +38,7 @@ class TestProjectCreator(TestCase):
         """
         # Insert a project
         occupied_name = "project_name"
-        repo.put(test_helper.create_project(occupied_name, ["a", "b", "c"]))
+        repo.put(test_helper.create_project(occupied_name, ["aa", "bb", "cc"]))
 
         name_attempt_1 = occupied_name
         name_attempt_2 = occupied_name

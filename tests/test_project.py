@@ -3,7 +3,7 @@ from unittest import TestCase
 from tests import test_helper
 
 PROJECT_NAME = "project_name"
-PROJECT_MEMBER_NAMES = ["aa", "b", "c", "d"]
+PROJECT_MEMBER_NAMES = ["aaa", "bb", "cc", "dd"]
 
 project = test_helper.create_project(PROJECT_NAME, PROJECT_MEMBER_NAMES)
 
@@ -14,7 +14,7 @@ class TestProject(TestCase):
         self.assertEqual(4, project.get_member_count())
 
     def test_get_longest_member(self):
-        self.assertEqual("aa", project.get_longest_member().name)
+        self.assertEqual("aaa", project.get_longest_member().name)
 
     def test_show_details(self):
         # TODO
@@ -22,11 +22,11 @@ class TestProject(TestCase):
 
     def test_raises_exception_for_duplicate_members(self):
         with self.assertRaises(ValueError):
-            test_helper.create_project("duplicate_members", ["a", "a", "c"])
+            test_helper.create_project("duplicate_members", ["aa", "aa", "cc"])
 
     def test_not_enough_members_raises_exception(self):
         with self.assertRaises(ValueError):
-            test_helper.create_project("not enough members", ["a", "b"])
+            test_helper.create_project("not enough members", ["aa", "bb"])
 
     def test_eq_members_in_different_order(self):
         # Same project but with members order reversed
@@ -37,13 +37,13 @@ class TestProject(TestCase):
     def test_eq_fewer_members(self):
         # Same project name but fewer members
         fewer_members = PROJECT_MEMBER_NAMES.copy()
-        fewer_members.remove("d")
+        fewer_members.remove("dd")
         project_fewer_members = test_helper.create_project(PROJECT_NAME, fewer_members)
         self.assertNotEqual(project, project_fewer_members)
 
     def test_eq_more_members(self):
         # Same project name and has the same members + additional members
-        project_more_members = test_helper.create_project(PROJECT_NAME, PROJECT_MEMBER_NAMES + ["e"])
+        project_more_members = test_helper.create_project(PROJECT_NAME, PROJECT_MEMBER_NAMES + ["ee"])
         self.assertNotEqual(project, project_more_members)
 
     def test_eq_diff_member_names(self):

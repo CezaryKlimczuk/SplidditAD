@@ -50,7 +50,7 @@ class ProjectsExporter:
         :raises ValueError when the give project cannot be exported because the user hasn't entered all the votes.
         """
         for member in project.members:
-            if member.get_remaining_votes() != 0:
+            if member.remaining_votes != 0:
                 # Cannot export projects where the user hasn't filled the votes
                 raise ValueError("Cannot export project \"%s\" because the votes haven't been entered" % project.name)
 
