@@ -2,9 +2,10 @@ MAX_AVAILABLE_VOTES = 100
 
 
 class Project:
+    MIN_MEMBER_COUNT = 3
+
     def __init__(self, project_name, members):
         self.name = project_name
-
         self.__assert_member_names_are_unique(members)
         self.__assert_enough_members(members)
         self.members = list(members)
@@ -40,8 +41,8 @@ class Project:
 
     @staticmethod
     def __assert_enough_members(members):
-        if len(members) < 3:
-            raise ValueError("Not enough members %s. Require at least 3" % members)
+        if len(members) < Project.MIN_MEMBER_COUNT:
+            raise ValueError("Not enough members %s. Require at least %s" % (members, Project.MIN_MEMBER_COUNT))
 
     def get_member_count(self):
         """
@@ -65,7 +66,7 @@ class Project:
         """
         details = ""
         details += "\n"
-        details += ("There are %s team members\n" % self.get_member_count())  # At least 3 team members so always plural
+        details += ("There are %s team members\n" % self.get_member_count())
         details += "\n"
         details += "The point allocation based on votes is:\n"
         details += "\n"

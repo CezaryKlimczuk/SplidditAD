@@ -16,18 +16,24 @@ class ProjectCreator:
 
     def create_new_project(self):
         """
-        Queries the user to create a new project, and adds the project to the repository
+        Queries the user to create a new, valid project, and adds the project to the repository
 
         :return: a new Project
         """
-        project_name = self.__get_new_project_name()
-        num_of_members = self.__get_new_project_member_count()
-        print('\n')
-        team_members = self.__get_new_project_member_names(num_of_members)
-        print('\n')
-        project = Project(project_name, team_members)
-        self.__repo.put(project)
-        return project
+        while True:
+            project_name = self.__get_new_project_name()
+            num_of_members = self.__get_new_project_member_count()
+            print('\n')
+            team_members = self.__get_new_project_member_names(num_of_members)
+            print('\n')
+            try:
+                project = Project(project_name, team_members)
+                self.__repo.put(project)
+                return project
+            except ValueError as error:
+                print("Could not create project:")
+                print(error)
+                print("\n")
 
     def __get_new_project_name(self):
         """
@@ -39,8 +45,7 @@ class ProjectCreator:
 
         # Make sure a project with such name doesn't exist
         while self.__repo.find_by_name(name) is not None:
-            print("A project with this name already exists, try again.")
-            name = self.__get_new_project_name()
+            name = str(input("A project with this name already exists, try again."))
 
         # TODO make sure there are no special characters
 
@@ -51,7 +56,7 @@ class ProjectCreator:
         Queries the user for the number of members for a new project
 
         :return:
-            (int) the number of members the new project should have. Will be at least 3
+            (int) the number of members the new project should have. Will be at least Project.MIN_MEMBER_COUNT
         """
         num_of_members = input("Enter the number of team members: ")
         while not self.__is_member_count_input_valid(num_of_members):
@@ -68,7 +73,7 @@ class ProjectCreator:
         of members in the project
         :return: True if the input is an integer and is valid
         """
-        return member_count_input.isdigit() and int(member_count_input) > 2
+        return member_count_input.isdigit() and int(member_count_input) >= Project.MIN_MEMBER_COUNT
 
     def __get_new_project_member_names(self, num_of_members):
         """
