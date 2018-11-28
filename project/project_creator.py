@@ -47,8 +47,7 @@ class ProjectCreator:
         while self.__repo.find_by_name(name) is not None:
             name = str(input("A project with this name already exists, try again."))
 
-        # TODO make sure there are no special characters
-
+        # validation is performed when we try to create a Person with the name
         return name
 
     def __get_new_project_member_count(self):
@@ -101,7 +100,7 @@ class ProjectCreator:
         :return: a Person which has a unique name not currently present in current_team_members
         """
         while True:
-            member_name = str(input("\tEnter the name of team member %s: " % (member_index + 1))).strip()
+            member_name = input("\tEnter the name of team member %s: " % (member_index + 1)).strip()
 
             # Checking if the same member is not entered twice
             if member_name in [member.name for member in current_team_members]:

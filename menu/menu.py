@@ -25,9 +25,9 @@ def get_selected_menu_item():
 
     :return: an element of all_options
     """
-    option = str(input("  Please choose an option: ")).upper().strip()
+    option = input("  Please choose an option: ").upper().strip()
     while option not in all_options:
-        option = str(input("  Incorrect input. Please choose an option: ")).upper().strip()
+        option = input("  Incorrect input. Please choose an option: ").upper().strip()
     return option
 
 

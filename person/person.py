@@ -10,12 +10,12 @@ class Person:
         :param name: The name of the Person. Must be unique in a single project, but doesn't have to be unique across
         projects. The name must also be at least a certain number of characters in length, as defined in MIN_NAME_LENGTH
         """
-        self.__name = Person.__assert_valid_name(name)
+        self.__name = Person.assert_valid_name(name)
         self.__votes = {}  # Person -> points (int)
         self.__remaining_votes = MAX_AVAILABLE_VOTES
 
     @staticmethod
-    def __assert_valid_name(name: str):
+    def assert_valid_name(name: str):
         """
         Asserts that the name is valid for a new Person.
 
