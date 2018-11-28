@@ -110,8 +110,8 @@ class TestPerson(TestCase):
 
         # Assign the same votes to a copy of foo
         foo_copy = Person("foo")
-        bar_derivative = Person("bar:1")
-        baz_derivative = Person("baz:1")
+        bar_derivative = Person("bar-1")
+        baz_derivative = Person("baz-1")
         foo_copy.assign_votes(bar_derivative, MAX_AVAILABLE_VOTES)
         foo_copy.assign_votes(baz_derivative, 0)
 
@@ -125,6 +125,13 @@ class TestPerson(TestCase):
         with self.assertRaises(ValueError):
             Person(" a ")
 
-    def test_whitespaced_name_is_trimmed(self):
+    def test_whitespace_name_is_trimmed(self):
         person = Person(" aa  ")
         self.assertNotEqual("aa", person)
+
+    def test_invalid_char_in_name_raises_exception(self):
+        with self.assertRaises(ValueError):
+            Person("special.char.not.allowed")
+
+        with self.assertRaises(ValueError):
+            Person("new\n\line\n")

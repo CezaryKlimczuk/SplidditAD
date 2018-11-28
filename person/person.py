@@ -3,6 +3,7 @@ from project.project import MAX_AVAILABLE_VOTES
 
 class Person:
     MIN_NAME_LENGTH = 2
+    VALID_SPECIAL_NAME_CHARS = ['-', '_']
 
     def __init__(self, name):
         """
@@ -10,12 +11,12 @@ class Person:
         :param name: The name of the Person. Must be unique in a single project, but doesn't have to be unique across
         projects. The name must also be at least a certain number of characters in length, as defined in MIN_NAME_LENGTH
         """
-        self.__name = Person.assert_valid_name(name)
+        self.__name = Person.__assert_valid_name(name)
         self.__votes = {}  # Person -> points (int)
         self.__remaining_votes = MAX_AVAILABLE_VOTES
 
     @staticmethod
-    def assert_valid_name(name: str):
+    def __assert_valid_name(name: str):
         """
         Asserts that the name is valid for a new Person.
 
@@ -29,7 +30,25 @@ class Person:
                 (name.strip(), Person.MIN_NAME_LENGTH)
             )
 
+        for char in name.strip():
+            if not Person.__is_valid_char_in_name(char):
+                raise ValueError(
+                    "Name '%s' contains invalid character '%s'. Only lowercase and uppercase names are allowed, as well as '-' and '_'" % (
+                        name.strip(), char)
+                )
+
         return name.strip()
+
+    @staticmethod
+    def __is_valid_char_in_name(char):
+        """
+        Check if a character in the Project name is valid.
+        Valid characters are alphanumeric (any case) or '-', or '_'
+
+        :param char: The character that we are checking if the name can contain
+        :return: True if the given character can be in the project name, False otherwise
+        """
+        return char.isalpha() or char.isnumeric() or char in Person.VALID_SPECIAL_NAME_CHARS
 
     @property
     def votes(self):

@@ -85,7 +85,7 @@ class TestProjectsExporter(TestCase):
         """
         member_names = []
         for i in range(0, member_count):
-            member_name = project_name + ":" + str(i)
+            member_name = project_name + "_" + str(i)
             member_names.append(member_name)
 
         project = test_helper.create_project(project_name, member_names)
