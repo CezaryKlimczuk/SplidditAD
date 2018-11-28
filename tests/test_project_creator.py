@@ -83,3 +83,20 @@ class TestProjectCreator(TestCase):
             member_names = [foo, bar, baz]
             for member in project.members:
                 self.assertTrue(member.name in member_names)
+
+    def test_create_invalid_project_invalid_name(self):
+        name = "abc"
+        mocked_inputs = []
+
+        # First attempt. Too short name. It will then print an error that ' ab ' is invalid
+        mocked_inputs += [" ab ", "3", "foo", "bar", "baz"]
+
+        # Second attempt. Special char in name.
+        mocked_inputs += ["special.char", "3", "foo", "bar", "baz"]
+
+        # Final attempt. It's valid
+        mocked_inputs += [name, "3", "foo", "bar", "baz"]
+
+        with mock_inputs(mocked_inputs):
+            project = project_creator.create_new_project()
+            self.assertEqual(project.name, name)
