@@ -20,6 +20,19 @@ class TestProject(TestCase):
         # TODO
         pass
 
+    def test_raises_exception_for_short_name(self):
+        with self.assertRaises(ValueError):
+            test_helper.create_project("  ", ["aa", "bb", "cc"])
+
+    def test_raises_exception_for_invalid_char_in_name(self):
+        members = ["aa", "bb", "cc"]
+
+        with self.assertRaises(ValueError):
+            test_helper.create_project("invalid.project.name", members)
+
+        with self.assertRaises(ValueError):
+            test_helper.create_project("new\nline\nin\nmiddle", members)
+
     def test_raises_exception_for_duplicate_members(self):
         with self.assertRaises(ValueError):
             test_helper.create_project("duplicate_members", ["aa", "aa", "cc"])
@@ -54,7 +67,7 @@ class TestProject(TestCase):
 
     def test_eq_diff_names(self):
         # Different project name and all members have the same name
-        project_with_diff_name = test_helper.create_project(PROJECT_NAME + ":1", PROJECT_MEMBER_NAMES)
+        project_with_diff_name = test_helper.create_project(PROJECT_NAME + "_1", PROJECT_MEMBER_NAMES)
         self.assertNotEqual(project, project_with_diff_name)
 
     def test_eq_same_args(self):

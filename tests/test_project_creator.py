@@ -42,7 +42,7 @@ class TestProjectCreator(TestCase):
 
         name_attempt_1 = occupied_name
         name_attempt_2 = occupied_name
-        name_attempt_3 = occupied_name + ":1"
+        name_attempt_3 = occupied_name + "_1"
 
         member_count = "3"  # input() returns a string so we must use a string when mocking
         foo = "foo"

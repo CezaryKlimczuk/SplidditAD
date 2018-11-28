@@ -3,9 +3,11 @@ MAX_AVAILABLE_VOTES = 100
 
 class Project:
     MIN_MEMBER_COUNT = 3
+    MIN_NAME_LENGTH = 3
+    VALID_NAME_SPECIAL_CHARS = ['-', '_']
 
     def __init__(self, project_name, members):
-        self.name = project_name
+        self.name = self.__assert_valid_project_name(project_name)
         self.__assert_member_names_are_unique(members)
         self.__assert_enough_members(members)
         self.members = list(members)
@@ -31,7 +33,45 @@ class Project:
         return True
 
     def __hash__(self) -> int:
+        # name is always unique in the repo, hash that directly
         return hash(self.name)
+
+    @staticmethod
+    def __assert_valid_project_name(project_name: str):
+        """
+        Throws an exception if the project name is invalid.
+        Returns the name that should be used, as it is trimmed (stripped) of whitespace
+
+        :param project_name: The name of the project
+        :return: The name of the project. May be different than the argument
+        :raises ValueError if the name isn't valid
+        """
+        result = project_name.strip()
+
+        if len(result) < Project.MIN_NAME_LENGTH:
+            raise ValueError(
+                "Project name '%s' is too short. Must be at least '%s' characters in length"
+                % (result, Project.MIN_NAME_LENGTH)
+            )
+
+        for char in result:
+            if not Project.__is_valid_char_name(char):
+                raise ValueError(
+                    "Invalid character '%s' in name '%s'. All chars must be alphanumeric, or '-', or '_'"
+                    % (char, result)
+                )
+
+        return result
+
+    @staticmethod
+    def __is_valid_char_name(char):
+        """
+        Checks if a char is valid. A valid char is alphanumeric (any case) or in Project.VALID_NAME_SPECIAL_CHARS
+
+        :param char: The characters in a name that we're testing if it's allowed
+        :return: True if the character is allowed in the name, False otherwise.
+        """
+        return char.isalpha() or char.isnumeric() or char in Project.VALID_NAME_SPECIAL_CHARS
 
     @staticmethod
     def __assert_member_names_are_unique(members):
