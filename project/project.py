@@ -7,12 +7,16 @@ class Project:
     VALID_NAME_SPECIAL_CHARS = ['-', '_']
 
     def __init__(self, project_name, members):
-        self.name = self.__assert_valid_project_name(project_name)
+        self.__name = self.__assert_valid_project_name(project_name)
         self.__assert_member_names_are_unique(members)
         self.__assert_enough_members(members)
         self.members = list(members)
         for member in members:
             member._project = self
+
+    @property
+    def name(self):
+        return self.__name
 
     def __eq__(self, o: object) -> bool:
         if id(self) == id(o):
@@ -21,7 +25,7 @@ class Project:
         if not isinstance(o, Project):
             return False
 
-        if self.name != o.name:
+        if self.__name != o.__name:
             return False
 
         # we don't care about the order of the members, but we do need them to be ordered when testing. This is because
@@ -34,7 +38,7 @@ class Project:
 
     def __hash__(self) -> int:
         # name is always unique in the repo, hash that directly
-        return hash(self.name)
+        return hash(self.__name)
 
     @staticmethod
     def __assert_valid_project_name(project_name: str):
@@ -124,4 +128,4 @@ class Project:
         print(details)
 
     def __str__(self) -> str:
-        return "Project(name=%s, members=%s)" % (self.name, str(self.members))
+        return "Project(name=%s, members=%s)" % (self.__name, str(self.members))
