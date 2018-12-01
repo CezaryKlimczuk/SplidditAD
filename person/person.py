@@ -94,7 +94,6 @@ class Person:
 
         original_vote = self.__votes.get(person, None)
         if original_vote is not None:
-            print("Updating score for %s" % person.name)
             if vote - original_vote > self.__remaining_votes:
                 raise ValueError(
                     "%s: You've currently assigned %s votes for member %s and have %s points remaining to allocate, "

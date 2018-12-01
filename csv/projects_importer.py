@@ -91,9 +91,10 @@ class ProjectsImporter:
 
                         for target_member in members.values():
                             if target_member.name == target_member_name:
-                                previous_vote = member.assign_votes(target_member, int(target_member_vote))
+                                previous_vote = member.votes.get(target_member, None)
                                 if previous_vote is not None:
                                     raise ValueError("Duplicate votes for %s" % member, target_member)
+                                member.assign_votes(target_member, int(target_member_vote))
 
                     if member.remaining_votes != 0:
                         raise ValueError("Did not assign all votes for %s" % member)
