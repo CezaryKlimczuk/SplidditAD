@@ -1,4 +1,5 @@
 from menu import menu
+from menu.menu import MenuItem
 from project.project_creator import ProjectCreator
 from project.project_repository import ProjectRepository
 from project.project_retriever import ProjectRetriever
@@ -31,21 +32,25 @@ def main():
     on_quit() is always called just before the program terminates from user selecting quit menu item
     """
     on_start()
-    selected_option = None
-    while selected_option != menu.quit_program:
-        menu.print_main_menu()
-        selected_option = menu.get_selected_menu_item()
 
-        if selected_option == menu.about:
+    selected_item = None
+    while selected_item != MenuItem.QUIT_PROGRAM:
+        menu.print_main_menu()
+        selected_item = menu.get_selected_menu_item()
+
+        if selected_item == MenuItem.ABOUT:
             on_print_about_requested()
-        elif selected_option == menu.create_project:
+
+        elif selected_item == MenuItem.CREATE_PROJECT:
             on_create_project_requested()
-        elif selected_option == menu.enter_votes:
+
+        elif selected_item == MenuItem.ENTER_VOTES:
             on_enter_votes_requested()
-        elif selected_option == menu.show_project:
+
+        elif selected_item == MenuItem.SHOW_PROJECT:
             on_show_project_requested()
 
-        if selected_option != menu.quit_program:
+        if selected_item != MenuItem.QUIT_PROGRAM:
             menu.await_input_for_main_menu()
 
     on_quit()

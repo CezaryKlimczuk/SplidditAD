@@ -1,10 +1,16 @@
-about = 'A'
-create_project = 'C'
-enter_votes = 'V'
-show_project = 'S'
-quit_program = 'Q'
+from enum import Enum
 
-all_options = [about, create_project, enter_votes, show_project, quit_program]
+
+class MenuItem(Enum):
+    ABOUT = 'A'
+    CREATE_PROJECT = 'C'
+    ENTER_VOTES = 'V'
+    SHOW_PROJECT = 'S'
+    QUIT_PROGRAM = 'Q'
+
+    @staticmethod
+    def has_value(value):
+        return any(value == item.value for item in MenuItem)
 
 
 def print_main_menu():
@@ -26,9 +32,10 @@ def get_selected_menu_item():
     :return: an element of all_options
     """
     option = input("  Please choose an option: ").upper().strip()
-    while option not in all_options:
+    while not MenuItem.has_value(option):
         option = input("  Incorrect input. Please choose an option: ").upper().strip()
-    return option
+
+    return MenuItem(option)
 
 
 def await_input_for_main_menu():
