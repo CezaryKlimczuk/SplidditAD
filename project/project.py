@@ -104,9 +104,9 @@ class Project:
         """
         return max(self.members, key=lambda x: len(x.name))
 
-    def show_details(self):
+    def get_details(self):
         """
-        Prints the number of team members and the scores of each team member
+        :return (string) a user-presentable string with the number of team members and the scores of each team member
         """
         details = ""
         details += "\n"
@@ -124,8 +124,7 @@ class Project:
             details += (indent_left + member.name + str_right + indent_right + str(member.get_total_score(self))) + "\n"
 
         details += "\n"
-
-        print(details)
+        return details
 
     def __str__(self) -> str:
         return "Project(name=%s, members=%s)" % (self.__name, str(self.members))

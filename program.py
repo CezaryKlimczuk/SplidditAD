@@ -101,7 +101,7 @@ def on_show_project_requested():
     The user has requested to show a project
     """
     project = retriever.get_project_from_user()
-    project.show_details()
+    print(project.get_details())
 
 
 def on_quit():
