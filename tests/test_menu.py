@@ -1,3 +1,4 @@
+import builtins
 from unittest import TestCase
 from unittest.mock import MagicMock
 
@@ -9,11 +10,13 @@ from tests.test_helper import mock_inputs
 class TestMenu(TestCase):
 
     def test_print_main_menu_calls_print(self):
-        menu.print = MagicMock()
+        original_print = builtins.print
+        builtins.print = MagicMock()
+
         menu.print_main_menu()
-        # print is a built in function so unresolved reference can be safely ignored
-        # noinspection PyUnresolvedReferences
-        self.assertTrue(menu.print.called)
+        self.assertTrue(builtins.print.called)
+        
+        builtins.print = original_print
 
     def test_get_selected_menu_for_default_valid_input(self):
         self.assert_returns_menu_item_for_input("a", MenuItem.ABOUT)
