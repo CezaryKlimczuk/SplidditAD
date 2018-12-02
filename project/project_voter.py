@@ -2,6 +2,10 @@ from project.project import MAX_AVAILABLE_VOTES
 
 
 class ProjectVoter:
+    """
+    The ProjectVoter is responsible for querying the user for each members votes on a project.
+    If the user provides invalid input, it keeps querying the user for valid input until a Project has been voted on fully.
+    """
 
     def __init__(self) -> None:
         super().__init__()

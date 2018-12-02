@@ -3,6 +3,10 @@ from person.person import Person
 
 
 class ProjectCreator:
+    """
+    A ProjectCreator is responsible for guiding the user through the flow of creating a new Project. It asks the user for the project name,
+    member count, member names. If at any point, the users input is invalid, it keeps querying the user for valid input.
+    """
 
     def __init__(self, repo) -> None:
         """

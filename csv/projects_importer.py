@@ -7,6 +7,19 @@ debug = False
 
 
 class ProjectsImporter:
+    """
+    This class is responsible for importing all the projects from a CSV file into a ProjectRepository..
+    Ideally, the ProjectsRepo would be in control of importing all the data when created, however project requirements
+    dictate that projects should be exported/imported at the start/exit of the program, rather than upon creating a new
+    Project.
+
+    If the provided file does not exist, then nothing is imported.
+    If the files does exist, we parse it one line at a time. Only valid lines are imported, any invalid lines are
+    ignored and an warning is printed to the console.
+
+    The CSV file does not have a header line.
+    The exact format is specified in Appendix 1 of the brief
+    """
 
     def __init__(self, file_name, projects_repo) -> None:
         """
@@ -21,6 +34,9 @@ class ProjectsImporter:
         self.__projects_repo = projects_repo
 
     def import_projects(self):
+        """
+        Call when you wish to import all the projects from the supplied CSV file into the repository.
+        """
         print("Importing projects from %s" % self.__file_name)
         try:
             projects = self.__read_projects()

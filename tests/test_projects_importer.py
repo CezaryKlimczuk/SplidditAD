@@ -32,27 +32,27 @@ class TestProjectsImporter(TestCase):
         no_file_importer.import_projects()
 
         # It should instead import nothing
-        self.assertEqual(set(), repo.get_all())
+        self.assertEqual(set(), repo.projects)
 
     def test_import_invalid_projects(self):
-        self.assertEqual(set(), repo.get_all())
+        self.assertEqual(set(), repo.projects)
         importer = ProjectsImporter(invalid_projects, repo)
         importer.import_projects()
         # None of the invalid projects should be imported
         # ===========================
-        self.assertEqual(set(), repo.get_all())
+        self.assertEqual(set(), repo.projects)
 
     def test_import_mixed_projects(self):
-        self.assertEqual(set(), repo.get_all())
+        self.assertEqual(set(), repo.projects)
         importer = ProjectsImporter(mixed_projects, repo)
         importer.import_projects()
         # Mixed is a concatenation of the invalid and then valid projects
         # The last 2 are the valid ones
         # ===========================
-        self.assertEqual(2, len(repo.get_all()))
+        self.assertEqual(2, len(repo.projects))
 
     def test_import_valid_projects(self):
-        self.assertEqual(set(), repo.get_all())
+        self.assertEqual(set(), repo.projects)
         importer = ProjectsImporter(valid_projects, repo)
         importer.import_projects()
 
@@ -104,4 +104,4 @@ class TestProjectsImporter(TestCase):
 
         # ===============================
 
-        self.assertEqual({c1_engs101p, project_c}, repo.get_all())
+        self.assertEqual({c1_engs101p, project_c}, repo.projects)

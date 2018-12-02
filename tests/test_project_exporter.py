@@ -33,7 +33,7 @@ class TestProjectsExporter(TestCase):
         self.assert_file_exists()
 
     def test_export_projects(self):
-        self.assertEqual(set(), repo.get_all())
+        self.assertEqual(set(), repo.projects)
 
         project_1 = self.create_project("project_1", 3)  # Create a project with 3 members
         project_2 = self.create_project("project_2", 5)  # Create a project with 5 members
@@ -49,7 +49,7 @@ class TestProjectsExporter(TestCase):
 
         # Should import the above 2 projects perfectly
         expected = {project_1, project_2}
-        actual = repo.get_all()
+        actual = repo.projects
         self.assertEqual(expected, actual)
 
     def test_export_incomplete_projects(self):
@@ -63,14 +63,14 @@ class TestProjectsExporter(TestCase):
         repo.put(incomplete_project)
 
         # Make sure all valid/invalid projects are in the repo
-        self.assertEqual({project_1, project_2, incomplete_project}, repo.get_all())
+        self.assertEqual({project_1, project_2, incomplete_project}, repo.projects)
 
         exporter.export_projects()
         repo.delete_all()
         importer.import_projects()
 
         expected = {project_1, project_2}
-        actual = repo.get_all()
+        actual = repo.projects
         self.assertEqual(expected, actual)
 
     @staticmethod
