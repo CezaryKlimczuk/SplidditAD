@@ -6,6 +6,7 @@ class MenuItem(Enum):
     CREATE_PROJECT = 'C'
     ENTER_VOTES = 'V'
     SHOW_PROJECT = 'S'
+    GUI = 'G'
     QUIT_PROGRAM = 'Q'
 
     @staticmethod
@@ -22,6 +23,7 @@ def print_main_menu():
           '  Create Project  (C)\n'
           '  Enter Votes     (V)\n'
           '  Show Project    (S)\n'
+          '  (NEW) GUI       (G)\n'
           '  Quit            (Q)\n')
 
 

@@ -1,3 +1,4 @@
+from gui import gui_program
 from menu import menu
 from menu.menu import MenuItem
 from project.project_creator import ProjectCreator
@@ -49,6 +50,9 @@ def main():
 
         elif selected_item == MenuItem.SHOW_PROJECT:
             on_show_project_requested()
+
+        elif selected_item == MenuItem.GUI:
+            on_show_gui_requested()
 
         if selected_item != MenuItem.QUIT_PROGRAM:
             menu.await_input_for_main_menu()
@@ -102,6 +106,11 @@ def on_show_project_requested():
     """
     project = retriever.get_project_from_user()
     print(project.get_details())
+
+
+def on_show_gui_requested():
+    app = gui_program.SpliddItApp()
+    app.mainloop()
 
 
 def on_quit():
