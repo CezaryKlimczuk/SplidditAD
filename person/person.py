@@ -2,6 +2,11 @@ from project.project import MAX_AVAILABLE_VOTES
 
 
 class Person:
+    """
+    The Person class is used to store information about each person/member in a project.
+    When creating a Person object, we perform all necessary checks to assure that the given person is valid.
+    """
+
     MIN_NAME_LENGTH = 2
     VALID_SPECIAL_NAME_CHARS = ['-', '_']
 

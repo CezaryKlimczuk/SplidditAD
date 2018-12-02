@@ -28,9 +28,9 @@ class ProjectsExporter:
         """
         Exports all the projects in the repo to the provided csv file. Overwrites any current such file.
         """
-        print("Exporting %s projects to %s" % (len(self.projects_repo.get_all()), self.file_name))
+        print("Exporting %s projects to %s" % (len(self.projects_repo.projects), self.file_name))
         lines = []
-        for project in self.projects_repo.get_all():
+        for project in self.projects_repo.projects:
             try:
                 lines.append(self.__to_csv_line(project))
             except ValueError as error:

@@ -88,4 +88,4 @@ class TestProjectRepository(TestCase):
         self.assertEqual(project_2, repo.find_by_name(project_2.name))
 
     def assert_repo_eq(self, values):
-        self.assertEqual(set(values), repo.get_all())
+        self.assertEqual(set(values), repo.projects)

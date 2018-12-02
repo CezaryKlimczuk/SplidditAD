@@ -2,6 +2,11 @@ MAX_AVAILABLE_VOTES = 100
 
 
 class Project:
+    """
+    The Project class stores all the necessary info about a Project. It holds the name and all the members.
+    Attempting to create an invalid Project, such as one with a name that is too short throws an exception.
+    """
+
     MIN_MEMBER_COUNT = 3
     MIN_NAME_LENGTH = 3
     VALID_NAME_SPECIAL_CHARS = ['-', '_']
@@ -16,6 +21,11 @@ class Project:
 
     @property
     def name(self):
+        """
+        A getter for the project name
+
+        :return: The project name. Does not contain whitespace
+        """
         return self.__name
 
     def __eq__(self, o: object) -> bool:
@@ -79,12 +89,22 @@ class Project:
 
     @staticmethod
     def __assert_member_names_are_unique(members):
+        """
+        Asserts that all members have unique names. If there are duplicate member names, it raises a ValueError
+
+        :param members: The members that the Project should have
+        """
         unique_member_names = set(map(lambda member: member.name, members))
         if len(unique_member_names) != len(members):
             raise ValueError("Duplicate member names in %s" % members)
 
     @staticmethod
     def __assert_enough_members(members):
+        """
+        Asserts that we have enough members. If we don't have enough, a ValueError is raised
+
+        :param members: The members that the Project should have
+        """
         if len(members) < Project.MIN_MEMBER_COUNT:
             raise ValueError("Not enough members %s. Require at least %s" % (members, Project.MIN_MEMBER_COUNT))
 

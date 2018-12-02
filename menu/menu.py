@@ -2,6 +2,9 @@ from enum import Enum
 
 
 class MenuItem(Enum):
+    """
+    An enum for each menu item
+    """
     ABOUT = 'A'
     CREATE_PROJECT = 'C'
     ENTER_VOTES = 'V'
@@ -11,6 +14,12 @@ class MenuItem(Enum):
 
     @staticmethod
     def has_value(value):
+        """
+        Checks if any of the defined MenuItem enums have the same value as the argument.
+
+        :param value: The argument we are searching for to see if an enum has it
+        :return: True if such a MenuItem exists, False otherwise
+        """
         return any(value == item.value for item in MenuItem)
 
 
