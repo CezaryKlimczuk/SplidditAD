@@ -92,6 +92,10 @@ def on_enter_votes_requested():
     Queries the user for a project name, finds the project, queries user for votes, and updates the project.
     """
     project = retriever.get_project_from_user()
+    if project is None:
+        print("You haven't created any projects yet. Create a project by selecting '%s'", MenuItem.CREATE_PROJECT.value)
+        return
+
     print('There are %s team members.' % project.get_member_count())
     voter.assign_points_from_user(project)
 
@@ -101,6 +105,10 @@ def on_show_project_requested():
     The user has requested to show a project
     """
     project = retriever.get_project_from_user()
+    if project is None:
+        print("You haven't created any projects yet. Create a project by selecting '%s'", MenuItem.CREATE_PROJECT.value)
+        return
+
     print(project.get_details())
 
 

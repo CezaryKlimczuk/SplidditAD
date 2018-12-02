@@ -34,3 +34,7 @@ class ProjectRetrieverTest(TestCase):
         with mock_inputs(project_names):
             retrieved_project = retriever.get_project_from_user()
             self.assertEqual(retrieved_project, project)
+
+    def test_returns_none_when_no_projects_in_repository(self):
+        repo.delete_all()
+        self.assertIsNone(retriever.get_project_from_user())
