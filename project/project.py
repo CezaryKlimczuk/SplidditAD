@@ -132,16 +132,29 @@ class Project:
         details += "\n"
         details += ("There are %s team members\n" % self.get_member_count())
         details += "\n"
-        details += "The point allocation based on votes is:\n"
-        details += "\n"
 
-        indent_left = "\t"
-        longest_member = self.get_longest_member()
-        indent_right = "\t"
-        for member in self.members:
-            name_space_count = len(longest_member.name) - len(member.name)
-            str_right = ":" + name_space_count * " "
-            details += (indent_left + member.name + str_right + indent_right + str(member.get_total_score(self))) + "\n"
+        all_members_voted = all(member.remaining_votes == 0 for member in self.members)
+        if all_members_voted:
+            details += "The point allocation based on votes is:\n"
+            details += "\n"
+
+            indent_left = "\t"
+            longest_member = self.get_longest_member()
+            indent_right = "\t"
+            for member in self.members:
+                name_space_count = len(longest_member.name) - len(member.name)
+                str_right = ":" + name_space_count * " "
+
+                if member.remaining_votes == 0:
+                    score_summary = str(member.get_total_score(self))
+                else:
+                    score_summary = "Has not allocated all points"
+
+                details += (indent_left + member.name + str_right + indent_right + score_summary) + "\n"
+        else:
+            details += "Not all members have voted, so can't show the scores:\n"
+            for member in self.members:
+                details += "\t %s has %s remaining votes\n" % (member.name, member.remaining_votes)
 
         details += "\n"
         return details
