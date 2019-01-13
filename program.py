@@ -93,7 +93,8 @@ def on_enter_votes_requested():
     """
     project = retriever.get_project_from_user()
     if project is None:
-        print("You haven't created any projects yet. Create a project by selecting '%s'", MenuItem.CREATE_PROJECT.value)
+        print(
+            "You haven't created any projects yet. Create a project by selecting '%s'" % MenuItem.CREATE_PROJECT.value)
         return
 
     print('There are %s team members.' % project.get_member_count())
@@ -106,7 +107,8 @@ def on_show_project_requested():
     """
     project = retriever.get_project_from_user()
     if project is None:
-        print("You haven't created any projects yet. Create a project by selecting '%s'", MenuItem.CREATE_PROJECT.value)
+        print(
+            "You haven't created any projects yet. Create a project by selecting '%s'" % MenuItem.CREATE_PROJECT.value)
         return
 
     print(project.get_details())
